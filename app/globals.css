@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0f1115; /* Deep slate / charcoal */
+  --foreground: #e5e5e5;
+  --gold: #c5a059;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.glass-panel {
+  background: rgba(20, 25, 30, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.heading-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+.glow-text {
+  text-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+}
