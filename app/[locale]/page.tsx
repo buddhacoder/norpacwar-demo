@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ExhibitCard } from '../components/ExhibitCard';
+import { ExhibitCard } from '@/components/ExhibitCard';
 
 export default function Home() {
   return (

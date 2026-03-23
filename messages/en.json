@@ -1,0 +1,12 @@
+{
+  "Navigation": {
+    "campaigns": "CAMPAIGNS",
+    "units": "UNITS",
+    "aircraft": "AIRCRAFT",
+    "archives": "ARCHIVES"
+  },
+  "Footer": {
+    "rights": "North Pacific Skies Memorial. All Rights Reserved.",
+    "dedication": "Dedicated to the veterans of the North Pacific theatre."
+  }
+}

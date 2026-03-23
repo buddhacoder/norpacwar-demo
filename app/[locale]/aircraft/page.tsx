@@ -2,6 +2,16 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { GalleryGrid } from '@/components/GalleryGrid';
+
+const galleryImages = [
+  { id: '1', src: 'https://images.unsplash.com/photo-1544215286-90f23d463fd2?q=80&w=2670&auto=format&fit=crop', alt: 'PV-1 Cockpit Instruments', caption: 'Detailed view of the complex instrument panel required to navigate through zero-visibility conditions in the Aleutians.' },
+  { id: '2', src: 'https://images.unsplash.com/photo-1518178144215-dcfae69e0618?q=80&w=2670&auto=format&fit=crop', alt: 'Archival Map of Action', caption: 'Original bombing run maps over Paramushiro, indicating target vectors and anti-aircraft strongholds.' },
+  { id: '3', src: 'https://images.unsplash.com/photo-1605655963288-75d15ab4baca?q=80&w=2670&auto=format&fit=crop', alt: 'Crew Briefing Notes', caption: 'Handwritten mission notes detailing the extreme icing warnings and primary target coordinates.' },
+  { id: '4', src: 'https://plus.unsplash.com/premium_photo-1673292418042-45e0766289b4?q=80&w=2670&auto=format&fit=crop', alt: 'Nose Art Scheme', caption: 'Distinctive squadron nose art painted on a PV-1 Ventura, showing the wear and tear of Pacific weather.' },
+  { id: '5', src: 'https://images.unsplash.com/photo-1596484394467-fbd67d9f78ff?q=80&w=2670&auto=format&fit=crop', alt: 'Engine Maintenance', caption: 'Mechanics working on the twin Pratt & Whitney R-2800 engines under harsh conditions.' },
+  { id: '6', src: 'https://images.unsplash.com/photo-1550937402-23b98c364177?q=80&w=2670&auto=format&fit=crop', alt: 'Post-Mission Debrief', caption: 'Exhausted crew members debriefing intelligence officers after a successful 12-hour patrol.' },
+];
 
 const aircraftPhotos = [
   { src: '/historic/VB-135_11V_-20V_Amchitka-450x450.jpg', title: 'PV-1 Venturas parked at Amchitka Airbase' },
@@ -45,7 +55,7 @@ export default function AircraftPage() {
           <h2 className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4">Honoring the Losses</h2>
           <p className="text-gray-400 text-sm mb-8 italic">Based on Craig Fuller's list and War Diaries of VP/VPB 131, 135, 136, 139.</p>
 
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4 mb-20">
             {losses.map((loss, idx) => (
               <motion.div 
                 key={idx}
@@ -62,6 +72,15 @@ export default function AircraftPage() {
                 <p className="text-sm text-gray-400">{loss.detail}</p>
               </motion.div>
             ))}
+          </div>
+
+          <h2 className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4">Primary Source Archives</h2>
+          <p className="text-gray-400 text-lg leading-relaxed max-w-3xl mb-12">
+            Explore the historical artifacts, mission briefing documents, and mechanical diagrams that kept the Empire Express flying. Click on any document to view the high-resolution archival scan.
+          </p>
+          
+          <div className="glass-panel p-6 sm:p-8">
+            <GalleryGrid images={galleryImages} />
           </div>
 
         </motion.div>
