@@ -29,3 +29,19 @@
  ✓ Compiled in 36ms (268 modules)
  ✓ Compiled in 23ms (268 modules)
  ✓ Compiled in 79ms (713 modules)
+ ⨯ ./components/CyrillicGhostQuotes.tsx
+Error:   [31mx[0m Expression expected
+    ,-[[36;1;4m/Users/macstudiodaddy/projects/Norpacwar/components/CyrillicGhostQuotes.tsx[0m:42:1]
+ [2m39[0m |         </motion.div>
+ [2m40[0m |       </AnimatePresence>
+ [2m41[0m |     </div>
+ [2m42[0m |   );
+    : [35;1m  ^[0m
+ [2m43[0m | }
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/CyrillicGhostQuotes.tsx
