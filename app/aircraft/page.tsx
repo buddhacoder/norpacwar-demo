@@ -1,59 +1,71 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-export default function Aircraft() {
+const aircraftPhotos = [
+  { src: '/historic/VB-135_11V_-20V_Amchitka-450x450.jpg', title: 'PV-1 Venturas parked at Amchitka Airbase' },
+];
+
+const losses = [
+  { date: '5/10/43', buno: '29847/9', crew: 'Lt. (j.g) Owen L. Parmenter (VB-136)', detail: 'Missing following operational search.' },
+  { date: '5/10/43', buno: '29794/5', crew: 'Lt. (j.g.) Robert J. Molloy (VB-136)', detail: 'Crashed into Kuluk Bay, Adak, in bad weather while returning from rescue search.' },
+  { date: '5/14/43', buno: '33142', crew: 'Lt. (j.g) Byron L. Lough (VB-138)', detail: 'Hit Mt. Washington near its top in heavy weather following departure.' },
+  { date: '5/23/43', buno: '29787/21', crew: 'Grant T. Anderson (VB-135)', detail: 'Crash on takeoff. Action of a nearby Army B-24 saved the lives of three crew members.' },
+];
+
+export default function AircraftPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Aircraft & Machines</h1>
-        <div className="h-1 w-24 bg-gold mb-12"></div>
-        
-        <p className="text-lg text-gray-300 max-w-3xl leading-relaxed mb-16 font-light">
-          The war in the Aleutians was a technological crucible. Aircraft were subjected to extreme weather - icing, violent downdrafts, and impenetrable fog. Explore the primary warbirds that flew the North Pacific Skies.
-        </p>
+    <div className="min-h-screen pt-32 pb-24 px-6 root-layout">
+      <div className="max-w-5xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <div className="text-[var(--gold)] font-bold tracking-widest text-sm mb-4">AIRCRAFT & MACHINES</div>
+          <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">The PV-1 Ventura</h1>
+          <p className="text-gray-400 text-lg leading-relaxed max-w-3xl mb-12">
+            The Lockheed PV-1 Ventura was the rugged workhorse of the North Pacific. Fighting blinding fogs, severe icing, and relentless winds, the Venturas required immense skill and bravery just to keep them in the sky.
+          </p>
 
-        <div className="flex flex-col gap-12">
-          
-          <div className="glass-panel p-8 rounded-sm grid md:grid-cols-2 gap-8 items-center border border-white/5">
-            <div>
-              <h3 className="text-3xl text-gold font-serif mb-4">PV-1 Ventura</h3>
-              <p className="text-gray-400 font-light leading-relaxed mb-4">
-                The Lockheed PV-1 Ventura was the backbone of the US Navy's bombing squadrons in the Aleutians. Rugged, fast, and heavily armed, it served not only as a patrol bomber but as a strike aircraft against the Japanese home islands.
-              </p>
-              <ul className="text-sm text-gray-500 space-y-2 mt-6">
-                <li>• Operated extensively by VB/VPB-135, 136, and 139.</li>
-                <li>• Specialized in low-level maritime strikes.</li>
-                <li>• Subjected to unique "Aleutian Painting Schemes".</li>
-              </ul>
-            </div>
-            <div className="h-64 w-full bg-gradient-to-br from-gray-800 to-black border border-white/10 rounded-sm flex items-center justify-center">
-              <span className="text-gray-600 font-serif italic text-sm">PV-1 Schematic Archive</span>
+          <div className="w-full relative aspect-video rounded-sm overflow-hidden border border-white/10 mb-20 bg-black/40 xl:aspect-[21/9]">
+            <Image 
+              src={aircraftPhotos[0].src} 
+              alt={aircraftPhotos[0].title}
+              fill
+              className="object-cover opacity-90 sepia-[.3] grayscale-[.4] hover:grayscale-0 transition-all duration-700" 
+            />
+             <div className="absolute bottom-6 left-6 p-4 glass-panel border-l-2 border-[var(--gold)] max-w-sm">
+                <p className="text-sm text-gray-200 font-medium">{aircraftPhotos[0].title}</p>
             </div>
           </div>
 
-          <div className="glass-panel p-8 rounded-sm grid md:grid-cols-2 gap-8 items-center border border-white/5">
-            <div className="order-2 md:order-1 h-64 w-full bg-gradient-to-br from-gray-800 to-black border border-white/10 rounded-sm flex items-center justify-center">
-              <span className="text-gray-600 font-serif italic text-sm">Consolidated PBY Catalina Archive</span>
-            </div>
-            <div className="order-1 md:order-2">
-              <h3 className="text-3xl text-gold font-serif mb-4">PBY Catalina</h3>
-              <p className="text-gray-400 font-light leading-relaxed mb-4">
-                The iconic flying boats were the unsung heroes of the early campaign. They conducted reconnaissance in zero-visibility conditions, rescued downed aircrews from freezing waters, and even flew strike missions.
-              </p>
-              <ul className="text-sm text-gray-500 space-y-2 mt-6">
-                <li>• Known as the "P-Boats" by their crews.</li>
-                <li>• Flown by VP-41, VP-42, and VP-43 in the early months.</li>
-              </ul>
-            </div>
+          <h2 className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4">Honoring the Losses</h2>
+          <p className="text-gray-400 text-sm mb-8 italic">Based on Craig Fuller's list and War Diaries of VP/VPB 131, 135, 136, 139.</p>
+
+          <div className="grid grid-cols-1 gap-4">
+            {losses.map((loss, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="glass-panel p-6 border-l-4 border-red-900/50 hover:border-red-500/50 transition-colors"
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                  <div className="text-lg font-bold text-white font-serif">{loss.crew}</div>
+                  <div className="text-[var(--gold)] opacity-80 text-sm font-mono mt-2 md:mt-0">{loss.date} | BuNo: {loss.buno}</div>
+                </div>
+                <p className="text-sm text-gray-400">{loss.detail}</p>
+              </motion.div>
+            ))}
           </div>
 
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 }

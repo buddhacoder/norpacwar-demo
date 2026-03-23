@@ -1,59 +1,59 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-export default function Units() {
+const crewPhotos = [
+  { src: '/historic/VB-135-Crew-1943-1-e1692617988418-450x450.jpeg', title: 'VB-135 Crew 1943' },
+  { src: '/historic/VB-135_14V_17V_18V-e1692618822778-450x450.jpeg', title: 'VB-135 Ventura Formations' },
+];
+
+export default function UnitsPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">The Men & Units</h1>
-        <div className="h-1 w-24 bg-gold mb-12"></div>
-        
-        <p className="text-lg text-gray-300 max-w-3xl leading-relaxed mb-16 font-light">
-          The true story of the North Pacific Skies is written by the aviators and support staff who braved freezing fogs, mechanical failures, and fierce opponents. The records of these squadrons stand as testaments to endurance.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          
-          <div className="glass-panel p-8 rounded-sm hover:-translate-y-1 transition-transform border border-white/5 hover:border-gold/30">
-            <h3 className="text-2xl text-gold font-serif mb-2">USN Air Units</h3>
-            <p className="text-sm text-gray-400 mb-6 font-semibold tracking-wider">BOMBING SQUADRONS</p>
-            <ul className="text-gray-300 font-light space-y-3">
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gold"></span> VB/VPB-135 (1st & 2nd Tours)</li>
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gold"></span> VB/VPB-136</li>
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gold"></span> VB/VPB-139</li>
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gold"></span> VP-41, VP-42, VP-43, VP-45</li>
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-gold"></span> VP-61, VP-62</li>
-            </ul>
+    <div className="min-h-screen pt-32 pb-24 px-6 root-layout">
+      <div className="max-w-5xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16 border-b border-white/10 pb-16"
+        >
+          <div className="text-[var(--gold)] font-bold tracking-widest text-sm mb-4">UNITED STATES NAVAL AIR UNITS</div>
+          <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">Squadron VB/VPB-135</h1>
+          <div className="prose prose-invert max-w-none text-gray-400 leading-relaxed text-lg">
+            <p>
+              Commissioned on 15 February 1943 at Ault Field, Whidbey Island, WA. The nucleus of the Squadron was obtained from a decommissioned PBY squadron, VP-42, that itself was formed from the VP-17. The VP-17 made an impressive record in the defense of Dutch Harbor when it was attacked by a Japanese task force in June 1942.
+            </p>
+            <p>
+              VB-135 became the very first U.S. Navy Squadron operating PV-1 aircraft in the Western Aleutians and the Pacific Theater. Their tours of duty spearheaded the push deep into hostile weather and entrenched enemy airspace.
+            </p>
           </div>
+        </motion.div>
 
-          <div className="glass-panel p-8 rounded-sm hover:-translate-y-1 transition-transform border border-white/5 hover:border-gold/30">
-            <h3 className="text-2xl text-gold font-serif mb-2">USAAF Units</h3>
-            <p className="text-sm text-gray-400 mb-6 font-semibold tracking-wider">ARMY AIR FORCES</p>
-            <ul className="text-gray-300 font-light space-y-3">
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span> 404 Bombardment Squadron (Heavy)</li>
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Bomber Squadron 77 (Medium)</li>
-            </ul>
-            <div className="mt-8 opacity-70 italic text-sm text-gray-500 text-center border-t border-white/10 pt-4">
-              "They flew in conditions where the sea and sky merged into one icy gray wall."
-            </div>
-          </div>
-
-          <div className="glass-panel p-8 rounded-sm hover:-translate-y-1 transition-transform border border-white/5 hover:border-museumRed/30">
-            <h3 className="text-2xl text-museumRed font-serif mb-2">Japanese Air Units</h3>
-            <p className="text-sm text-gray-400 mb-6 font-semibold tracking-wider">IMPERIAL FORCES</p>
-            <ul className="text-gray-300 font-light space-y-3">
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-museumRed"></span> IJNAF Units (Naval Air Force)</li>
-              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-museumRed"></span> IJAAF Units (Army Air Force)</li>
-            </ul>
-          </div>
-
+        {/* Authentic Gallery */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+          {crewPhotos.map((photo, i) => (
+            <motion.div 
+              key={photo.title}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.2 }}
+              className="relative aspect-square md:aspect-video rounded-sm overflow-hidden border-2 border-white/5 group bg-[#0f1115]"
+            >
+              <Image 
+                src={photo.src} 
+                alt={photo.title} 
+                fill 
+                className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
+              />
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-6">
+                <h4 className="text-white font-serif">{photo.title}</h4>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
