@@ -17,13 +17,27 @@ const playlist = [
 
 export default function AmbientAudio() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isRadioPlaying, setIsRadioPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement>(null);
+  const radioRef = useRef<HTMLAudioElement>(null);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const toggleRadio = () => {
+    if (radioRef.current) {
+      if (isRadioPlaying) {
+        radioRef.current.pause();
+      } else {
+        radioRef.current.volume = 0.8;
+        radioRef.current.play();
+      }
+      setIsRadioPlaying(!isRadioPlaying);
+    }
   };
 
   const stopAudio = () => {
