@@ -20,6 +20,7 @@ export default function CyrillicGhostQuotes() {
     return () => clearInterval(interval);
   }, []);
 
+  return (
     <div className="fixed top-[47vh] left-0 right-0 z-40 pointer-events-none flex items-center justify-center overflow-hidden opacity-30">
       <AnimatePresence mode="wait">
          <motion.div
