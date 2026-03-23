@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, Square, SkipForward, Music, Radio } from 'lucide-react';
 
-const radioBroadcastUrl = "https://upload.wikimedia.org/wikipedia/commons/8/87/Levitan_-_Act_of_Military_Surrender_of_Germany_%28May_8%2C_1945%29.ogg";
+const radioBroadcastUrl = "/audio/levitan.ogg";
 
 // You will replace these URLs with the generated Suno audio files.
 // Next.js layout.tsx keeps this component mounted constantly, so music NEVER stops or resets when clicking between pages.

@@ -9,6 +9,7 @@ import AleutianAsh from '@/components/AleutianAsh';
 import CyrillicGhostQuotes from '@/components/CyrillicGhostQuotes';
 import HapticsProvider from '@/components/HapticsProvider';
 import AmbientAudio from '@/components/AmbientAudio';
+import MegaMenu from '@/components/MegaMenu';
 import '../globals.css';
 
 export async function generateMetadata({ params }: { params: Promise<{locale: string}> }) {
@@ -55,20 +56,7 @@ export default async function LocaleLayout({
           <AleutianAsh />
           <CyrillicGhostQuotes />
           <AmbientAudio />
-          <nav className="fixed w-full z-50 glass-panel border-b-0 border-white/5 top-0 transition-all duration-300 backdrop-blur-md bg-black/30">
-            <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-              <Link href="/" className="text-[var(--gold)] font-serif text-xl font-semibold tracking-wider">
-                {tNav('title')}
-              </Link>
-              <div className="flex gap-6 text-sm text-gray-300 font-medium tracking-wide items-center">
-                <Link href="/campaigns" className="hover:text-gold transition-colors">{tNav('campaigns')}</Link>
-                <Link href="/units" className="hover:text-gold transition-colors">{tNav('units')}</Link>
-                <Link href="/aircraft" className="hover:text-gold transition-colors">{tNav('aircraft')}</Link>
-                <Link href="/archives" className="hover:text-gold transition-colors">{tNav('archives')}</Link>
-                <LocaleSwitcher locale={locale} />
-              </div>
-            </div>
-          </nav>
+          <MegaMenu locale={locale} />
           <main className="flex-grow pt-20">
             {children}
           </main>
