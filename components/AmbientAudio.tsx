@@ -1,65 +1,114 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Play, Pause, Square, SkipForward, Music } from 'lucide-react';
+
+// You will replace these URLs with the generated Suno audio files.
+// Next.js layout.tsx keeps this component mounted constantly, so music NEVER stops or resets when clicking between pages.
+const playlist = [
+  { id: 1, title: "The Gathering Storm", url: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Tchaikovsky_-_Symphony_No_6_in_B_minor%2C_Op_74_%28Pathetique%29_-_IV._Finale._Adagio_lamentoso_-_Andante_%28Musopen%29.ogg" },
+  { id: 2, title: "The Letter Home", url: "" },
+  { id: 3, title: "Empire Express", url: "" },
+  { id: 4, title: "Zero Visibility", url: "" },
+  { id: 5, title: "Roll of Honor", url: "" }
+];
 
 export default function AmbientAudio() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
+  
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Tchaikovsky - Symphony No 6 (Pathetique) - IV. Finale Adagio lamentoso. Exceptionally haunting and public domain via Musopen (Wikimedia).
-  const bgAudioUrl = "https://upload.wikimedia.org/wikipedia/commons/b/b4/Tchaikovsky_-_Symphony_No_6_in_B_minor%2C_Op_74_%28Pathetique%29_-_IV._Finale._Adagio_lamentoso_-_Andante_%28Musopen%29.ogg";
-
-  // The browser prevents autoplay without interaction. 
-  // The toggle allows them to start the cinematic experience deliberately.
-  
   const togglePlay = () => {
-    if(!audioRef.current) return;
+    if (!audioRef.current || !playlist[currentTrackIndex].url) return;
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      audioRef.current.play().catch(e => console.warn("Audio play blocked by browser:", e));
     }
     setIsPlaying(!isPlaying);
   };
 
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0; // Reset to beginning
+    setIsPlaying(false);
+  };
+
+  const nextTrack = () => {
+    setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+  };
+
+  // When track index changes, we need to load the new source. If it was already playing, auto-play the new one.
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.load();
+      if (isPlaying && playlist[currentTrackIndex].url) {
+        audioRef.current.play().catch(e => console.warn("Audio play blocked by browser:", e));
+      }
+    }
+  }, [currentTrackIndex, isPlaying]);
+
   return (
-    <>
+    <div 
+      className="fixed bottom-6 left-6 z-50 flex items-end gap-2"
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      {/* 
+        Hidden audio element. 
+        onEnded={nextTrack} automatically plays the next song in the array when one finishes!
+      */}
       <audio 
         ref={audioRef} 
-        src={bgAudioUrl} 
-        loop
+        src={playlist[currentTrackIndex].url}
+        onEnded={nextTrack}
         preload="auto"
       />
+
+      {/* Main Music Icon Button */}
       <motion.button
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={togglePlay}
-        className="fixed bottom-6 left-6 z-50 glass-panel p-4 rounded-full border border-white/10 hover:border-[var(--gold)]/50 transition-colors flex items-center justify-center group shadow-2xl overflow-hidden"
-        title="Toggle Historical Soundtrack"
+        className="glass-panel p-4 rounded-full border border-white/10 hover:border-[var(--gold)]/50 transition-colors flex items-center justify-center group shadow-2xl relative overflow-hidden"
+        title="Historical Soundtrack Controls"
       >
         <div className={`absolute inset-0 bg-gradient-to-tr from-[var(--gold)]/20 to-transparent ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : 'opacity-0'} transition-opacity pointer-events-none`} />
-        
-        <svg 
-          width="24" height="24" viewBox="0 0 24 24" 
-          fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" 
-          className={`text-[var(--gold)] group-hover:text-white transition-colors relative z-10`}
-        >
-          {isPlaying ? (
-            <>
-              <path d="M9 18V5l12-2v13"></path>
-              <circle cx="6" cy="18" r="3"></circle>
-              <circle cx="18" cy="16" r="3"></circle>
-            </>
-          ) : (
-            <>
-               <path d="M9 18V5l12-2v13" opacity="0.3"></path>
-               <circle cx="6" cy="18" r="3" opacity="0.3"></circle>
-               <circle cx="18" cy="16" r="3" opacity="0.3"></circle>
-               <line x1="2" y1="2" x2="22" y2="22" className="text-red-500"></line>
-            </>
-          )}
-        </svg>
+        {isPlaying ? <Music className="w-6 h-6 text-[var(--gold)] relative z-10 animate-pulse" /> : <Music className="w-6 h-6 text-gray-500 relative z-10" />}
       </motion.button>
-    </>
+
+      {/* Slide-out Player Controls */}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, x: -20, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -10, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="glass-panel py-3 px-5 rounded-full border border-white/10 flex items-center gap-4 shadow-2xl mb-1 ml-1"
+          >
+             <div className="text-xs font-mono text-[var(--gold)] mr-2 max-w-[150px] truncate tracking-wider">
+               {playlist[currentTrackIndex].title}
+             </div>
+             
+             <button onClick={togglePlay} className="text-gray-400 hover:text-white transition-colors" title={isPlaying ? "Pause" : "Play"}>
+                {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
+             </button>
+             
+             <button onClick={stopAudio} className="text-gray-400 hover:text-white transition-colors" title="Stop">
+                <Square className="w-4 h-4 fill-current" />
+             </button>
+             
+             <button onClick={nextTrack} className="text-gray-400 hover:text-white transition-colors" title="Skip to Next Track">
+                <SkipForward className="w-5 h-5 fill-current" />
+             </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

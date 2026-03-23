@@ -11,10 +11,14 @@ import HapticsProvider from '@/components/HapticsProvider';
 import AmbientAudio from '@/components/AmbientAudio';
 import '../globals.css';
 
-export const metadata: Metadata = {
-  title: "North Pacific Skies – People and Machines",
-  description: "Honoring the history of the Aleutian and Kurile campaigns.",
-};
+export async function generateMetadata({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
 export default async function LocaleLayout({
   children,
@@ -53,8 +57,8 @@ export default async function LocaleLayout({
           <AmbientAudio />
           <nav className="fixed w-full z-50 glass-panel border-b-0 border-white/5 top-0 transition-all duration-300 backdrop-blur-md bg-black/30">
             <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-              <Link href="/" className="text-gold font-serif text-xl font-semibold tracking-wider">
-                North Pacific Skies
+              <Link href="/" className="text-[var(--gold)] font-serif text-xl font-semibold tracking-wider">
+                {tNav('title')}
               </Link>
               <div className="flex gap-6 text-sm text-gray-300 font-medium tracking-wide items-center">
                 <Link href="/campaigns" className="hover:text-gold transition-colors">{tNav('campaigns')}</Link>

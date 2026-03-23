@@ -2,35 +2,39 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-
-const timelineEvents = [
-  {
-    date: 'June 1942',
-    title: 'Dutch Harbor Attack',
-    description: 'Japanese forces launch a diversionary strike against the US Naval Base at Dutch Harbor, bringing the war to North American soil and sparking the long Aleutian Campaign.',
-    image: '/aleutian_foggy_base.png'
-  },
-  {
-    date: '1942 – 1943',
-    title: 'The Weather War',
-    description: 'US and Canadian forces endure brutal, freezing conditions to establish forward airbases. More aircraft are lost to the sudden, violent storms and zero-visibility fog than to enemy fire.',
-    image: null
-  },
-  {
-    date: '1943 – 1945',
-    title: 'Kurile Operations',
-    description: 'Armed with the rugged PV-1 Venturas, the Empire Express squadrons push the offensive from the Aleutians deep into the Japanese-held Kurile Islands, conducting relentless bombing runs.',
-    image: '/pv1_ventura_flight.png'
-  },
-  {
-    date: 'August 1945',
-    title: 'Shumshu Landing',
-    description: 'Soviet forces execute a massive amphibious assault on the fortified island of Shumshu. The ensuing battle became the final, bloody engagement of the Pacific Theater.',
-    image: null
-  }
-];
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function CampaignsClientLayout({ data }: any) {
+  const t = useTranslations('Campaigns');
+  const locale = useLocale();
+
+  const timelineEvents = [
+    {
+      date: 'June 1942',
+      title: t('timeline.t1_title'),
+      description: t('timeline.t1_desc'),
+      image: '/aleutian_foggy_base.png'
+    },
+    {
+      date: '1942 – 1943',
+      title: t('timeline.t2_title'),
+      description: t('timeline.t2_desc'),
+      image: null
+    },
+    {
+      date: '1943 – 1945',
+      title: t('timeline.t3_title'),
+      description: t('timeline.t3_desc'),
+      image: '/pv1_ventura_flight.png'
+    },
+    {
+      date: 'August 1945',
+      title: t('timeline.t4_title'),
+      description: t('timeline.t4_desc'),
+      image: null
+    }
+  ];
+
   return (
     <div className="min-h-screen pt-32 pb-24 px-6 shadow-inner">
       <div className="max-w-4xl mx-auto">
@@ -40,9 +44,9 @@ export default function CampaignsClientLayout({ data }: any) {
           transition={{ duration: 0.8 }}
           className="text-center mb-24"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6">The Aleutian Campaign</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6">{t('title')}</h1>
           <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            A forgotten theater characterized by lethal weather, extreme isolation, and the relentless endurance of the men who fought there.
+            {t('description')}
           </p>
         </motion.div>
 
@@ -94,25 +98,30 @@ export default function CampaignsClientLayout({ data }: any) {
         {/* Dynamic Legacy WordPress Copy */}
         {data && data.length > 0 && (
           <div className="mt-32 border-t border-white/10 pt-16">
-            <h2 className="text-3xl font-serif text-[var(--gold)] mb-12 text-center">Historical Campaign Reports</h2>
+            <h2 className="text-3xl font-serif text-[var(--gold)] mb-12 text-center">{t('historicalReports')}</h2>
             <div className="flex flex-col gap-16">
-              {data.map((doc: any, i: number) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="glass-panel p-8 md:p-12 text-left"
-                >
-                  <h3 className="text-3xl font-serif text-white mb-8 border-b border-white/5 pb-4">{doc.title_en}</h3>
-                  {doc.image && (
-                    <div className="w-full relative aspect-video rounded-sm overflow-hidden mb-8 border border-white/10">
-                      <Image src={doc.image} alt={doc.title_en} fill className="object-cover opacity-80" />
-                    </div>
-                  )}
-                  <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed font-serif" dangerouslySetInnerHTML={{ __html: doc.content_en }} />
-                </motion.div>
-              ))}
+              {data.map((doc: any, i: number) => {
+                const localizedTitle = locale === 'ru' && doc.title_ru ? doc.title_ru : doc.title_en;
+                const localizedContent = locale === 'ru' && doc.content_ru ? doc.content_ru : doc.content_en;
+                
+                return (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="glass-panel p-8 md:p-12 text-left"
+                  >
+                    <h3 className="text-3xl font-serif text-white mb-8 border-b border-white/5 pb-4">{localizedTitle}</h3>
+                    {doc.image && (
+                      <div className="w-full relative aspect-video rounded-sm overflow-hidden mb-8 border border-white/10">
+                        <Image src={doc.image} alt={localizedTitle} fill className="object-cover opacity-80" />
+                      </div>
+                    )}
+                    <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed font-serif" dangerouslySetInnerHTML={{ __html: localizedContent }} />
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         )}

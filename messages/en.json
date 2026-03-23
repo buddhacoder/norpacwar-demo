@@ -1,9 +1,14 @@
 {
   "Navigation": {
+    "title": "North Pacific Skies",
     "campaigns": "CAMPAIGNS",
     "units": "UNITS",
     "aircraft": "AIRCRAFT",
     "archives": "ARCHIVES"
+  },
+  "Metadata": {
+    "title": "North Pacific Skies – People and Machines",
+    "description": "Honoring the history of the Aleutian and Kurile campaigns."
   },
   "Footer": {
     "rights": "North Pacific Skies Memorial. All Rights Reserved.",
@@ -23,5 +28,37 @@
     "card3Desc": "Technical schematics and historical painting schemes, including the PV-1 Venturas.",
     "card4Title": "Archival Diaries",
     "card4Desc": "First-hand accounts, combat reports, and meticulously preserved casualty records."
+  },
+  "Campaigns": {
+    "title": "The Aleutian Campaign",
+    "description": "A forgotten theater characterized by lethal weather, extreme isolation, and the relentless endurance of the men who fought there.",
+    "historicalReports": "Historical Campaign Reports",
+    "timeline": {
+      "t1_title": "Dutch Harbor Attack",
+      "t1_desc": "Japanese forces launch a diversionary strike against the US Naval Base at Dutch Harbor, bringing the war to North American soil and sparking the long Aleutian Campaign.",
+      "t2_title": "The Weather War",
+      "t2_desc": "US and Canadian forces endure brutal, freezing conditions to establish forward airbases. More aircraft are lost to the sudden, violent storms and zero-visibility fog than to enemy fire.",
+      "t3_title": "Kurile Operations",
+      "t3_desc": "Armed with the rugged PV-1 Venturas, the Empire Express squadrons push the offensive from the Aleutians deep into the Japanese-held Kurile Islands, conducting relentless bombing runs.",
+      "t4_title": "Shumshu Landing",
+      "t4_desc": "Soviet forces execute a massive amphibious assault on the fortified island of Shumshu. The ensuing battle became the final, bloody engagement of the Pacific Theater."
+    }
+  },
+  "Units": {
+    "subtitle": "UNITED STATES NAVAL AIR UNITS",
+    "title": "Imperial & Allied Squadrons",
+    "description": "Detailed historic archives covering the various squadrons deployed during the hostile weather wars of the Aleutian and Kurile campaigns."
+  },
+  "Aircraft": {
+    "title": "Lockheed PV-1 Ventura",
+    "description": "The Lockheed PV-1 Ventura was the rugged workhorse of the North Pacific. Fighting blinding fogs, severe icing, and relentless winds, the Venturas required immense skill and bravery just to keep them in the sky.",
+    "galleryTitle": "Archival Photo Database"
+  },
+  "Search": {
+    "placeholder": "Enter Aviator Name, Squadron, or Tail Number...",
+    "statusActive": "Status: ACTIVE",
+    "statusMissing": "Status: MISSING",
+    "mia": "M.I.A.",
+    "kia": "K.I.A."
   }
 }

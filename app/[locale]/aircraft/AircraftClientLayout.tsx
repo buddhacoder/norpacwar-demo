@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { GalleryGrid } from '@/components/GalleryGrid';
+import { useTranslations, useLocale } from 'next-intl';
 
 const galleryImages = [
   { id: '1', src: 'https://images.unsplash.com/photo-1544215286-90f23d463fd2?q=80&w=2670&auto=format&fit=crop', alt: 'PV-1 Cockpit Instruments', caption: 'Detailed view of the complex instrument panel required to navigate through zero-visibility conditions in the Aleutians.' },
@@ -25,6 +26,8 @@ const losses = [
 ];
 
 export default function AircraftClientLayout({ data }: any) {
+  const t = useTranslations('Aircraft');
+  const locale = useLocale();
   const realGallery = data?.gallery?.length > 0 ? data.gallery : galleryImages;
   return (
     <div className="min-h-screen pt-32 pb-24 px-6 root-layout">
@@ -36,13 +39,13 @@ export default function AircraftClientLayout({ data }: any) {
           className="mb-16"
         >
           <div className="text-[var(--gold)] font-bold tracking-widest text-sm mb-4">AIRCRAFT & MACHINES</div>
-          <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">The PV-1 Ventura</h1>
+          <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">{t('title')}</h1>
           <p className="text-gray-400 text-lg leading-relaxed max-w-3xl mb-12">
-            The Lockheed PV-1 Ventura was the rugged workhorse of the North Pacific. Fighting blinding fogs, severe icing, and relentless winds, the Venturas required immense skill and bravery just to keep them in the sky.
+            {t('description')}
           </p>
           
           {data?.overview?.content_en && (
-             <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed mb-12 glass-panel p-8" dangerouslySetInnerHTML={{ __html: data.overview.content_en }} />
+             <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed mb-12 glass-panel p-8" dangerouslySetInnerHTML={{ __html: locale === 'ru' && data.overview.content_ru ? data.overview.content_ru : data.overview.content_en }} />
           )}
 
           <div className="w-full relative aspect-video rounded-sm overflow-hidden border border-white/10 mb-20 bg-black/40 xl:aspect-[21/9]">
@@ -79,7 +82,7 @@ export default function AircraftClientLayout({ data }: any) {
             ))}
           </div>
 
-          <h2 className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4">Primary Source Archives</h2>
+          <h2 className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4">{t('galleryTitle')}</h2>
           <p className="text-gray-400 text-lg leading-relaxed max-w-3xl mb-12">
             Explore the historical artifacts, mission briefing documents, and mechanical diagrams that kept the Empire Express flying. Click on any document to view the high-resolution archival scan.
           </p>

@@ -21,7 +21,7 @@ export default function CyrillicGhostQuotes() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[40] pointer-events-none flex items-center justify-center overflow-hidden opacity-20">
+    <div className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden opacity-20">
       <AnimatePresence mode="wait">
         <motion.div
            key={index}
@@ -31,10 +31,10 @@ export default function CyrillicGhostQuotes() {
            transition={{ duration: 6, ease: "easeInOut" }}
            className="text-center absolute w-full flex flex-col items-center justify-center translate-y-20 selection:bg-transparent"
         >
-          <div className="text-6xl md:text-9xl text-white font-serif tracking-[0.2em] whitespace-nowrap mb-6" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+          <div className="text-5xl md:text-8xl text-white font-serif tracking-[0.1em] text-center max-w-[90vw] leading-tight mb-6 px-4" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
             {quotes[index].ru}
           </div>
-          <div className="text-xl md:text-3xl text-white font-serif italic tracking-widest opacity-70">
+          <div className="text-lg md:text-2xl text-white font-serif italic tracking-widest opacity-70 px-4 text-center max-w-[80vw]">
             "{quotes[index].en}"
           </div>
         </motion.div>

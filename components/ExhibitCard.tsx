@@ -18,7 +18,7 @@ export function ExhibitCard({ title, description, imageUrl, link }: ExhibitCardP
       className="block glass-panel rounded-md overflow-hidden transition-colors hover:border-gold/30 group"
     >
       {imageUrl && (
-        <div className="h-48 w-full bg-cover bg-center" style={{ backgroundImage: `url(${imageUrl})` }} />
+        <div className="h-48 w-full bg-cover bg-center grayscale-[.5] sepia-[.4] opacity-80 group-hover:opacity-100 group-hover:grayscale-0 group-hover:sepia-0 transition-all duration-700 border-b border-white/5" style={{ backgroundImage: `url(${imageUrl})` }} />
       )}
       {!imageUrl && (
         <div className="h-48 w-full bg-gradient-to-br from-gray-900 to-black flex items-center justify-center border-b border-white/5">

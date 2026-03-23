@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, BookOpen, Clock } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 
 export type Article = {
   _id: string;
@@ -31,6 +32,9 @@ const historicDossiers: Dossier[] = [
 ];
 
 export function ArchiveSearch({ articles = [] }: { articles: Article[] }) {
+  const tSearch = useTranslations('Search');
+  const locale = useLocale();
+
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
@@ -80,7 +84,7 @@ export function ArchiveSearch({ articles = [] }: { articles: Article[] }) {
       >
         <div className="flex items-center gap-4 text-gray-300">
           <Search className="w-6 h-6 text-[var(--gold)] group-hover:text-white transition-colors" />
-          <span className="font-serif text-lg tracking-wide">Search the Historical Archives & Roll of Honor...</span>
+          <span className="font-serif text-lg tracking-wide">{tSearch('placeholder')}</span>
         </div>
         <div className="hidden sm:flex items-center gap-2 text-xs text-gray-500 font-mono bg-black/40 px-3 py-1.5 rounded-sm">
           <span>⌘</span><span>K</span>
@@ -104,7 +108,9 @@ export function ArchiveSearch({ articles = [] }: { articles: Article[] }) {
                 <X className="w-6 h-6" />
               </button>
 
-              <h1 className="text-4xl md:text-6xl font-serif text-white mb-6 leading-tight">{selectedArticle.title_en}</h1>
+              <h1 className="text-4xl md:text-6xl font-serif text-white mb-6 leading-tight">
+                 {locale === 'ru' && (selectedArticle as any).title_ru ? (selectedArticle as any).title_ru : selectedArticle.title_en}
+              </h1>
               <div className="flex items-center gap-4 text-gray-400 font-mono text-sm border-b border-white/10 pb-8 mb-12">
                 <span className="flex items-center gap-2"><Clock className="w-4 h-4" /> {selectedArticle.date || 'Historical Record'}</span>
                 <span>&bull;</span>
@@ -114,7 +120,7 @@ export function ArchiveSearch({ articles = [] }: { articles: Article[] }) {
               {/* Legacy WordPress Content Rendered Safely */}
               <div 
                 className="prose prose-invert prose-lg max-w-none font-light leading-relaxed [&_img]:rounded-md [&_img]:mx-auto [&_a]:text-[var(--gold)] [&_a]:underline"
-                dangerouslySetInnerHTML={{ __html: selectedArticle.content_en || '' }}
+                dangerouslySetInnerHTML={{ __html: locale === 'ru' && (selectedArticle as any).content_ru ? (selectedArticle as any).content_ru : (selectedArticle.content_en || '') }}
               />
             </div>
           </motion.div>
@@ -152,7 +158,7 @@ export function ArchiveSearch({ articles = [] }: { articles: Article[] }) {
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Enter Aviator Name, Topic, or Keyword..."
+                  placeholder={tSearch('placeholder')}
                   className="w-full bg-transparent border-b-2 border-white/20 pb-4 text-3xl sm:text-5xl font-serif text-white placeholder:text-white/20 focus:outline-none focus:border-[var(--gold)] transition-colors"
                 />
                 <div className="absolute top-1/2 -translate-y-1/2 right-4 text-white/20 font-mono text-sm">
@@ -221,16 +227,20 @@ export function ArchiveSearch({ articles = [] }: { articles: Article[] }) {
                                   <div className="p-3 bg-black/40 rounded-lg shrink-0">
                                     <BookOpen className="w-6 h-6 text-gray-400" />
                                   </div>
-                                  <div>
-                                    <h3 className="text-xl font-serif text-white mb-1 line-clamp-2">{article.title_en}</h3>
-                                    <div className="text-xs font-mono tracking-wider text-gray-500 uppercase">
-                                      {article.date || 'Archive Record'}
+                                    <div>
+                                      <h3 className="text-xl font-serif text-white mb-1 line-clamp-2">
+                                        {locale === 'ru' && (article as any).title_ru ? (article as any).title_ru : article.title_en}
+                                      </h3>
+                                      <div className="text-xs font-mono tracking-wider text-gray-500 uppercase">
+                                        {article.date || 'Archive Record'}
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <p className="text-sm font-light text-gray-400 line-clamp-3 leading-relaxed pl-14">
-                                  {article.content_en ? stripHtml(article.content_en) : 'No preview available. Tap to view full archival scan.'}
-                                </p>
+                                  <p className="text-sm font-light text-gray-400 line-clamp-3 leading-relaxed pl-14">
+                                    {(locale === 'ru' && (article as any).content_ru) 
+                                      ? stripHtml((article as any).content_ru).substring(0, 150) + '...'
+                                      : (article.content_en ? stripHtml(article.content_en).substring(0, 150) + '...' : 'No preview available. Tap to view full archival scan.')}
+                                  </p>
                               </motion.div>
                             ))}
                           </div>

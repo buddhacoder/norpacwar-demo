@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useTranslations, useLocale } from 'next-intl';
 
 const crewPhotos = [
   { src: '/historic/VB-135-Crew-1943-1-e1692617988418-450x450.jpeg', title: 'VB-135 Crew 1943' },
@@ -9,6 +10,9 @@ const crewPhotos = [
 ];
 
 export default function UnitsClientLayout({ data }: any) {
+  const t = useTranslations('Units');
+  const locale = useLocale();
+
   return (
     <div className="min-h-screen pt-32 pb-24 px-6 root-layout">
       <div className="max-w-5xl mx-auto">
@@ -18,21 +22,26 @@ export default function UnitsClientLayout({ data }: any) {
           transition={{ duration: 0.8 }}
           className="mb-16 border-b border-white/10 pb-16"
         >
-          <div className="text-[var(--gold)] font-bold tracking-widest text-sm mb-4">UNITED STATES NAVAL AIR UNITS</div>
-          <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">Imperial & Allied Squadrons</h1>
+          <div className="text-[var(--gold)] font-bold tracking-widest text-sm mb-4">{t('subtitle')}</div>
+          <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">{t('title')}</h1>
           <div className="prose prose-invert max-w-none text-gray-400 leading-relaxed text-lg mb-8">
             <p>
-              Detailed historic archives covering the various squadrons deployed during the hostile weather wars of the Aleutian and Kurile campaigns. 
+              {t('description')}
             </p>
           </div>
 
           <div className="flex flex-col gap-12 mt-12">
-            {data && data.length > 0 && data.map((unit: any, i: number) => (
-              <div key={i} className="glass-panel p-8 text-left border-l-4 border-[var(--gold)]">
-                <h3 className="text-2xl font-serif text-white mb-6">{unit.title_en}</h3>
-                <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed font-serif" dangerouslySetInnerHTML={{ __html: unit.content_en }} />
-              </div>
-            ))}
+            {data && data.length > 0 && data.map((unit: any, i: number) => {
+              const localizedTitle = locale === 'ru' && unit.title_ru ? unit.title_ru : unit.title_en;
+              const localizedContent = locale === 'ru' && unit.content_ru ? unit.content_ru : unit.content_en;
+
+              return (
+                <div key={i} className="glass-panel p-8 text-left border-l-4 border-[var(--gold)]">
+                  <h3 className="text-2xl font-serif text-white mb-6">{localizedTitle}</h3>
+                  <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed font-serif" dangerouslySetInnerHTML={{ __html: localizedContent }} />
+                </div>
+              );
+            })}
           </div>
         </motion.div>
 
