@@ -8,5 +8,20 @@
   "Footer": {
     "rights": "North Pacific Skies Memorial. All Rights Reserved.",
     "dedication": "Dedicated to the veterans of the North Pacific theatre."
+  },
+  "Home": {
+    "title": "NORTH PACIFIC SKIES",
+    "subtitle": "People and Machines",
+    "description": "A historical archive honoring the American, Japanese, and Soviet forces of the Aleutian and Kurile Campaigns. Discover the men, the aircraft, and the grueling operations in one of the most forgotten theaters of World War II.",
+    "enterBtn": "ENTER THE EXHIBITION",
+    "enterBtnRu": "ENTER (RU)",
+    "card1Title": "The Campaigns",
+    "card1Desc": "Explore the strategic battles of Dutch Harbor, the Aleutian Campaign, and Kurile Operations.",
+    "card2Title": "Men & Units",
+    "card2Desc": "Examine the detailed records of US, Japanese, and Soviet squadrons deployed.",
+    "card3Title": "Aircraft & Machines",
+    "card3Desc": "Technical schematics and historical painting schemes, including the PV-1 Venturas.",
+    "card4Title": "Archival Diaries",
+    "card4Desc": "First-hand accounts, combat reports, and meticulously preserved casualty records."
   }
 }

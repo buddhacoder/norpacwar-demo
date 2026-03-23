@@ -2,8 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { ExhibitCard } from '@/components/ExhibitCard';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 
 export default function Home() {
+  const t = useTranslations('Home');
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 text-center">
       <motion.div
@@ -13,35 +17,38 @@ export default function Home() {
         className="max-w-4xl"
       >
         <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 tracking-wide drop-shadow-md glow-text">
-          NORTH PACIFIC SKIES
+          {t('title')}
         </h1>
         <h2 className="text-xl md:text-2xl text-gold font-light mb-8 font-serif italic drop-shadow">
-          People and Machines
+          {t('subtitle')}
         </h2>
         
         <p className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-12 font-light">
-          A historical archive honoring the American, Japanese, and Soviet forces of the Aleutian and Kurile Campaigns. Discover the men, the aircraft, and the grueling operations in one of the most forgotten theaters of World War II.
+          {t('description')}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-museumRed/90 hover:bg-museumRed text-white tracking-widest text-sm font-semibold rounded-sm border border-red-500/30 transition-all shadow-[0_0_15px_rgba(139,0,0,0.5)]"
-          >
-            ENTER THE EXHIBITION
-          </motion.button>
+          <Link href="/campaigns">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 bg-museumRed/90 hover:bg-museumRed text-white tracking-widest text-sm font-semibold rounded-sm border border-red-500/30 transition-all shadow-[0_0_15px_rgba(139,0,0,0.5)] w-full sm:w-auto"
+            >
+              {t('enterBtn')}
+            </motion.button>
+          </Link>
           
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 glass-panel text-white tracking-widest text-sm font-semibold rounded-sm transition-all hover:bg-white/10"
-          >
-            ВОЙТИ В МУЗЕЙ (RU)
-          </motion.button>
+          <Link href="/campaigns" locale="ru">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 glass-panel text-white tracking-widest text-sm font-semibold rounded-sm transition-all hover:bg-white/10 w-full sm:w-auto"
+            >
+              {t('enterBtnRu')}
+            </motion.button>
+          </Link>
         </div>
 
-        {/* Feature Grid */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -49,23 +56,23 @@ export default function Home() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left"
         >
           <ExhibitCard 
-            title="The Campaigns" 
-            description="Explore the strategic battles of Dutch Harbor, the Aleutian Campaign, and Kurile Operations." 
+            title={t('card1Title')} 
+            description={t('card1Desc')} 
             link="/campaigns" 
           />
           <ExhibitCard 
-            title="Men & Units" 
-            description="Examine the detailed records of US, Japanese, and Soviet squadrons deployed." 
+            title={t('card2Title')} 
+            description={t('card2Desc')} 
             link="/units" 
           />
           <ExhibitCard 
-            title="Aircraft & Machines" 
-            description="Technical schematics and historical painting schemes, including the PV-1 Venturas." 
+            title={t('card3Title')} 
+            description={t('card3Desc')} 
             link="/aircraft" 
           />
           <ExhibitCard 
-            title="Archival Diaries" 
-            description="First-hand accounts, combat reports, and meticulously preserved casualty records." 
+            title={t('card4Title')} 
+            description={t('card4Desc')} 
             link="/archives" 
           />
         </motion.div>

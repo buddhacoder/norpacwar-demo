@@ -21,7 +21,7 @@ export default function CyrillicGhostQuotes() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[-2] pointer-events-none flex items-center justify-center overflow-hidden opacity-5">
+    <div className="fixed inset-0 z-[40] pointer-events-none flex items-center justify-center overflow-hidden opacity-20">
       <AnimatePresence mode="wait">
         <motion.div
            key={index}
