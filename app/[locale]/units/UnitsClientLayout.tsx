@@ -5,8 +5,9 @@ import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import ArchivalLens from '@/components/ArchivalLens';
 
-function AccordionDossier({ title, content, isOpen: initialOpen }: { title: string, content: string, isOpen: boolean }) {
+function AccordionDossier({ title, translatedContent, originalContent, isOpen: initialOpen }: { title: string, translatedContent: string, originalContent: string, isOpen: boolean }) {
   const [isOpen, setIsOpen] = useState(initialOpen);
   return (
     <div className="glass-panel border-l-4 border-[var(--gold)] overflow-hidden transition-all duration-300">
@@ -27,8 +28,12 @@ function AccordionDossier({ title, content, isOpen: initialOpen }: { title: stri
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
-            <div className="px-6 md:px-8 pb-8 pt-4 border-t border-white/5 mx-2">
-               <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed font-serif" dangerouslySetInnerHTML={{ __html: content }} />
+            <div className="px-6 md:px-8 pb-8 pt-4 border-t border-white/5 mx-2 relative">
+               <ArchivalLens 
+                 translatedHtml={translatedContent} 
+                 originalHtml={originalContent} 
+                 overlayText="HOLD TO REVEAL ORIGINAL DOSSIER" 
+               />
             </div>
           </motion.div>
         )}
@@ -67,12 +72,12 @@ export default function UnitsClientLayout({ data }: any) {
             {data && data.length > 0 && data.map((unit: any, i: number) => {
               const localizedTitle = locale === 'ru' && unit.title_ru ? unit.title_ru : unit.title_en;
               const localizedContent = locale === 'ru' && unit.content_ru ? unit.content_ru : unit.content_en;
-              // We'll manage open state locally inside a sub-component or just use a state for the active index
               return (
                 <AccordionDossier 
                   key={i} 
                   title={localizedTitle} 
-                  content={localizedContent} 
+                  translatedContent={localizedContent}
+                  originalContent={unit.content_en} 
                   isOpen={i === 0} // temporary fallback until state is built
                 />
               );
