@@ -1,8 +1,41 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
+import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+
+function AccordionDossier({ title, content, isOpen: initialOpen }: { title: string, content: string, isOpen: boolean }) {
+  const [isOpen, setIsOpen] = useState(initialOpen);
+  return (
+    <div className="glass-panel border-l-4 border-[var(--gold)] overflow-hidden transition-all duration-300">
+      <button 
+        onClick={() => setIsOpen(!isOpen)} 
+        className="w-full text-left p-6 md:p-8 flex items-center justify-between hover:bg-white/5 transition-colors outline-none"
+      >
+        <h3 className="text-xl md:text-2xl font-serif text-white tracking-wide">{title}</h3>
+        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
+          <ChevronDown className="w-6 h-6 text-[var(--gold)]" />
+        </motion.div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+          >
+            <div className="px-6 md:px-8 pb-8 pt-4 border-t border-white/5 mx-2">
+               <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed font-serif" dangerouslySetInnerHTML={{ __html: content }} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 const crewPhotos = [
   { src: '/historic/VB-135-Crew-1943-1-e1692617988418-450x450.jpeg', title: 'VB-135 Crew 1943' },
@@ -30,16 +63,18 @@ export default function UnitsClientLayout({ data }: any) {
             </p>
           </div>
 
-          <div className="flex flex-col gap-12 mt-12">
+          <div className="flex flex-col gap-2 mt-12">
             {data && data.length > 0 && data.map((unit: any, i: number) => {
               const localizedTitle = locale === 'ru' && unit.title_ru ? unit.title_ru : unit.title_en;
               const localizedContent = locale === 'ru' && unit.content_ru ? unit.content_ru : unit.content_en;
-
+              // We'll manage open state locally inside a sub-component or just use a state for the active index
               return (
-                <div key={i} className="glass-panel p-8 text-left border-l-4 border-[var(--gold)]">
-                  <h3 className="text-2xl font-serif text-white mb-6">{localizedTitle}</h3>
-                  <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed font-serif" dangerouslySetInnerHTML={{ __html: localizedContent }} />
-                </div>
+                <AccordionDossier 
+                  key={i} 
+                  title={localizedTitle} 
+                  content={localizedContent} 
+                  isOpen={i === 0} // temporary fallback until state is built
+                />
               );
             })}
           </div>
