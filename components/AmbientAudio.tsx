@@ -21,12 +21,6 @@ export default function AmbientAudio() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const togglePlay = () => {
-    if (!audioRef.current || !playlist[currentTrackIndex].url) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch(e => console.warn("Audio play blocked by browser:", e));
-    }
     setIsPlaying(!isPlaying);
   };
 
@@ -41,16 +35,33 @@ export default function AmbientAudio() {
     setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
   };
 
-  // When track index changes, we need to load the new source. If it was already playing, auto-play the new one.
+  // Only handle loading a new track when the index changes
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.load();
-      if (isPlaying && playlist[currentTrackIndex].url) {
-        audioRef.current.play().catch(e => console.warn("Audio play blocked by browser:", e));
+      if (isPlaying && playlist[currentTrackIndex]?.url) {
+        audioRef.current.play().catch(e => {
+          console.warn("Audio play blocked by browser:", e);
+          setIsPlaying(false);
+        });
       }
     }
-  }, [currentTrackIndex, isPlaying]);
+  }, [currentTrackIndex]);
+
+  // Handle play/pause toggling separately to avoid redundant load() calls
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(e => {
+          console.warn("Audio play blocked by browser:", e);
+          setIsPlaying(false);
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]);
 
   return (
     <div 

@@ -1,0 +1,24 @@
+
+> norpacwar@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:3000
+   - Network:      http://10.0.0.80:3000
+
+ ✓ Starting...
+ ✓ Ready in 958ms
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of /Users/macstudiodaddy/projects/Norpacwar/node_modules/next-intl/dist/esm/production/extractor/format/index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ✓ Compiled /middleware in 314ms (268 modules)
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of /Users/macstudiodaddy/projects/Norpacwar/node_modules/next-intl/dist/esm/production/extractor/format/index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 1907ms (1703 modules)
+ ✓ Compiled in 52ms (713 modules)
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of /Users/macstudiodaddy/projects/Norpacwar/node_modules/next-intl/dist/esm/production/extractor/format/index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ GET /en 200 in 2535ms
+ ✓ Compiled in 278ms (1703 modules)
+ ✓ Compiled in 126ms (713 modules)
+ ✓ Compiled in 59ms (713 modules)

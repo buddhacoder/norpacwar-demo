@@ -29,7 +29,7 @@ export default function CyrillicGhostQuotes() {
            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
            transition={{ duration: 6, ease: "easeInOut" }}
-           className="text-center absolute w-full flex flex-col items-center justify-center translate-y-20 selection:bg-transparent"
+           className="text-center absolute w-full flex flex-col items-center justify-center -translate-y-32 selection:bg-transparent"
         >
           <div className="text-5xl md:text-8xl text-white font-serif tracking-[0.1em] text-center max-w-[90vw] leading-tight mb-6 px-4" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
             {quotes[index].ru}

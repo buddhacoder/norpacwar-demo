@@ -53,30 +53,30 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left mt-32 xl:mt-48"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left mt-16"
         >
           <ExhibitCard 
             title={t('card1Title')} 
             description={t('card1Desc')} 
-            imageUrl="https://images.unsplash.com/photo-1518178144215-dcfae69e0618?q=80&w=800&auto=format&fit=crop"
+            imageUrl="/images/card1.png"
             link="/campaigns" 
           />
           <ExhibitCard 
             title={t('card2Title')} 
             description={t('card2Desc')} 
-            imageUrl="https://images.unsplash.com/photo-1550937402-23b98c364177?q=80&w=800&auto=format&fit=crop"
+            imageUrl="/images/card2.png"
             link="/units" 
           />
           <ExhibitCard 
             title={t('card3Title')} 
             description={t('card3Desc')} 
-            imageUrl="https://images.unsplash.com/photo-1544215286-90f23d463fd2?q=80&w=800&auto=format&fit=crop"
+            imageUrl="/images/card3.png"
             link="/aircraft" 
           />
           <ExhibitCard 
             title={t('card4Title')} 
             description={t('card4Desc')} 
-            imageUrl="https://images.unsplash.com/photo-1605655963288-75d15ab4baca?q=80&w=800&auto=format&fit=crop"
+            imageUrl="/images/card4.png"
             link="/archives" 
           />
         </motion.div>
