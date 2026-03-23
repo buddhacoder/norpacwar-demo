@@ -1,7 +1,9 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Square, SkipForward, Music } from 'lucide-react';
+import { Play, Pause, Square, SkipForward, Music, Radio } from 'lucide-react';
+
+const radioBroadcastUrl = "https://upload.wikimedia.org/wikipedia/commons/8/87/Levitan_-_Act_of_Military_Surrender_of_Germany_%28May_8%2C_1945%29.ogg";
 
 // You will replace these URLs with the generated Suno audio files.
 // Next.js layout.tsx keeps this component mounted constantly, so music NEVER stops or resets when clicking between pages.
@@ -80,6 +82,13 @@ export default function AmbientAudio() {
         preload="auto"
       />
 
+      {/* WWII Radio Broadcast Element */}
+      <audio 
+        ref={radioRef} 
+        src={radioBroadcastUrl}
+        preload="none"
+      />
+
       {/* Main Music Icon Button */}
       <motion.button
         whileHover={{ scale: 1.05 }}
@@ -116,6 +125,17 @@ export default function AmbientAudio() {
              
              <button onClick={nextTrack} className="text-gray-400 hover:text-white transition-colors" title="Skip to Next Track">
                 <SkipForward className="w-5 h-5 fill-current" />
+             </button>
+
+             <div className="w-px h-6 bg-white/20 mx-1"></div>
+
+             <button 
+               onClick={toggleRadio} 
+               className={`${isRadioPlaying ? 'text-red-500 animate-pulse' : 'text-gray-400'} hover:text-red-400 transition-colors relative group`} 
+               title="Listen to Authentic 1945 Yuri Levitan Radio Broadcast"
+             >
+                <Radio className="w-5 h-5" />
+                {isRadioPlaying && <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-ping"></span>}
              </button>
           </motion.div>
         )}
