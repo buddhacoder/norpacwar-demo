@@ -6,11 +6,11 @@ import { Play, Pause, Square, SkipForward, Music } from 'lucide-react';
 // You will replace these URLs with the generated Suno audio files.
 // Next.js layout.tsx keeps this component mounted constantly, so music NEVER stops or resets when clicking between pages.
 const playlist = [
-  { id: 1, title: "The Gathering Storm", url: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Tchaikovsky_-_Symphony_No_6_in_B_minor%2C_Op_74_%28Pathetique%29_-_IV._Finale._Adagio_lamentoso_-_Andante_%28Musopen%29.ogg" },
-  { id: 2, title: "The Letter Home", url: "" },
-  { id: 3, title: "Empire Express", url: "" },
-  { id: 4, title: "Zero Visibility", url: "" },
-  { id: 5, title: "Roll of Honor", url: "" }
+  { id: 1, title: "Холодный ветер над заливом", url: "/audio/Холодный ветер над заливом (The Gathering Storm).mp3" },
+  { id: 2, title: "Письмо домой", url: "/audio/Письмо домой (The Letter Home).mp3" },
+  { id: 3, title: "Двигатель Имперского Экспресса", url: "/audio/Двигатель Имперского Экспресса (The Engine of the Empire Express).mp3" },
+  { id: 4, title: "Нулевая видимость (The Aftermath)", url: "/audio/Нулевая видимость (The Aftermath).mp3" },
+  { id: 5, title: "Книга почёта (Roll of Honor)", url: "/audio/Книга почёта (Roll of Honor).mp3" }
 ];
 
 export default function AmbientAudio() {
