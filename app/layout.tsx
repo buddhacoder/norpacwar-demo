@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,14 +22,14 @@ export default function RootLayout({
       <body className="antialiased font-sans flex flex-col min-h-screen">
         <nav className="fixed w-full z-50 glass-panel border-b-0 border-white/5 top-0 transition-all duration-300 backdrop-blur-md bg-black/30">
           <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div className="text-gold font-serif text-xl font-semibold tracking-wider">
+            <Link href="/" className="text-gold font-serif text-xl font-semibold tracking-wider">
               North Pacific Skies
-            </div>
+            </Link>
             <div className="flex gap-6 text-sm text-gray-300 font-medium tracking-wide">
-              <a href="#" className="hover:text-gold transition-colors">CAMPAIGNS</a>
-              <a href="#" className="hover:text-gold transition-colors">UNITS</a>
-              <a href="#" className="hover:text-gold transition-colors">AIRCRAFT</a>
-              <a href="#" className="hover:text-gold transition-colors">ARCHIVES</a>
+              <Link href="/campaigns" className="hover:text-gold transition-colors">CAMPAIGNS</Link>
+              <Link href="/units" className="hover:text-gold transition-colors">UNITS</Link>
+              <Link href="/aircraft" className="hover:text-gold transition-colors">AIRCRAFT</Link>
+              <Link href="/archives" className="hover:text-gold transition-colors">ARCHIVES</Link>
               <div className="ml-4 border-l border-white/20 pl-4 flex gap-2">
                 <button className="text-gold hover:text-white transition-colors">EN</button>
                 <span className="text-gray-600">|</span>
