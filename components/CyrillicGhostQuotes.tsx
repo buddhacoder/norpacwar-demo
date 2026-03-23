@@ -21,16 +21,16 @@ export default function CyrillicGhostQuotes() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-40 pointer-events-none flex items-center justify-center overflow-hidden opacity-30">
+    <div className="fixed top-[32vh] left-0 right-0 z-40 pointer-events-none flex items-center justify-center overflow-hidden opacity-30">
       <AnimatePresence mode="wait">
-        <motion.div
-           key={index}
-           initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-           exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
-           transition={{ duration: 6, ease: "easeInOut" }}
-           className="text-center absolute w-full flex flex-col items-center justify-center -translate-y-28 selection:bg-transparent"
-        >
+         <motion.div
+            key={index}
+            initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+            transition={{ duration: 6, ease: "easeInOut" }}
+            className="text-center w-full flex flex-col items-center selection:bg-transparent"
+         >
           <div className="text-5xl md:text-8xl text-white font-serif tracking-[0.1em] text-center max-w-[90vw] leading-tight mb-6 px-4" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
             {quotes[index].ru}
           </div>

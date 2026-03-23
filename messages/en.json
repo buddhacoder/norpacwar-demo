@@ -15,19 +15,19 @@
     "dedication": "Dedicated to the veterans of the North Pacific theatre."
   },
   "Home": {
-    "title": "NORTH PACIFIC SKIES",
-    "subtitle": "People and Machines",
-    "description": "A historical archive honoring the American, Japanese, and Soviet forces of the Aleutian and Kurile Campaigns. Discover the men, the aircraft, and the grueling operations in one of the most forgotten theaters of World War II.",
+    "title": "North Pacific Skies",
+    "subtitle": "The Forgotten War at the Edge of the World",
+    "description": "In a theater of World War II where zero-visibility storms and freezing waters claimed more lives than the enemy, young aviators flew daily into the abyss. Here are their flight logs, their final letters, and the untouched diaries of the Empire Express—saved from the ice, so their sacrifices speak forever.",
     "enterBtn": "ENTER THE EXHIBITION",
     "enterBtnRu": "ENTER (RU)",
-    "card1Title": "The Campaigns",
-    "card1Desc": "Explore the strategic battles of Dutch Harbor, the Aleutian Campaign, and Kurile Operations.",
-    "card2Title": "Men & Units",
-    "card2Desc": "Examine the detailed records of US, Japanese, and Soviet squadrons deployed.",
-    "card3Title": "Aircraft & Machines",
-    "card3Desc": "Technical schematics and historical painting schemes, including the PV-1 Venturas.",
-    "card4Title": "Archival Diaries",
-    "card4Desc": "First-hand accounts, combat reports, and meticulously preserved casualty records."
+    "card1Title": "The Freezing Front",
+    "card1Desc": "Trace the secret operations and frozen battlelines where thousands fought a war against the elements and each other.",
+    "card2Title": "The Fallen and the Found",
+    "card2Desc": "Read the intimate personnel dossiers of the American, Soviet, and Japanese crews who never returned from the black fog.",
+    "card3Title": "The Steel Phantoms",
+    "card3Desc": "Discover the twin-engine PV-1 Venturas and PBY Catalinas that served as both heavily-armed weapons and freezing tombs.",
+    "card4Title": "Letters from the Void",
+    "card4Desc": "Uncover the raw, handwritten combat journals and personal letters preserved against the erasure of time."
   },
   "Campaigns": {
     "title": "The Aleutian Campaign",
