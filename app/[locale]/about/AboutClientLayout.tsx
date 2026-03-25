@@ -3,7 +3,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Image from 'next/image';
-import { Link } from '@/navigation'; // Assuming navigation.ts exists, if not use next-intl/client but standard next-intl setup uses this, or next/link if it's default next. Let's use next/link natively just in case, or "next-intl" if we know it.
 // Actually, I'll use Native Next Link to avoid breaking if navigation.ts isn't perfectly exported.
 import NextLink from 'next/link';
 
