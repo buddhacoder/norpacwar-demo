@@ -20,6 +20,7 @@
     "react": "19.0.0-rc-65a56d0e-20241020",
     "react-dom": "19.0.0-rc-65a56d0e-20241020",
     "sanity": "^3.42.0",
+    "sanity-plugin-media": "^4.1.1",
     "styled-components": "^6.1.11",
     "tailwind-merge": "^2.5.2"
   },
