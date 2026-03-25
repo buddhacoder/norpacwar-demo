@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ArchiveSearch, Article } from '@/components/ArchiveSearch';
+import ArtifactViewer from '@/components/ArtifactViewer';
 
 export default function ArchivesClientLayout({ articles }: { articles: Article[] }) {
   return (
@@ -10,11 +11,15 @@ export default function ArchivesClientLayout({ articles }: { articles: Article[]
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
+        className="w-full flex flex-col"
       >
-        <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Archival Diaries</h1>
-        <div className="h-1 w-24 bg-[var(--gold)] mb-10"></div>
+        <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Archival Diaries & Artifacts</h1>
+        <div className="h-1 w-24 bg-[var(--gold)] mb-8"></div>
         
-        <div className="max-w-3xl mb-16">
+        {/* The 3D Digital Exhibit */}
+        <ArtifactViewer />
+        
+        <div className="max-w-3xl mb-16 mt-12">
           <ArchiveSearch articles={articles} />
           <p className="text-lg text-gray-300 leading-relaxed font-light mt-8">
             Primary sources, from combat diaries to casualty records, provide an unstinting look into the human cost and the daily reality of the North Pacific theatre. Explore the preserved documents of the Allied and Japanese forces.
