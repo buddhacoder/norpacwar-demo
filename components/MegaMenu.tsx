@@ -44,6 +44,11 @@ export default function MegaMenu({ locale }: { locale: string }) {
               THE STORY
             </Link>
           </div>
+          <div className="py-4" onMouseEnter={() => setActiveDropdown(null)}>
+            <Link href="/tribute" className={`hover:text-[var(--museumRed)] transition-colors py-2 ${(pathname && pathname.includes('tribute')) ? 'text-[var(--museumRed)]' : ''}`}>
+              TRIBUTE
+            </Link>
+          </div>
           {['campaigns', 'units', 'aircraft'].map((key) => (
             <div 
               key={key} 

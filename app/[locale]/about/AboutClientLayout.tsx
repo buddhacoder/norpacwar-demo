@@ -3,10 +3,10 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Image from 'next/image';
-// Actually, I'll use Native Next Link to avoid breaking if navigation.ts isn't perfectly exported.
 import NextLink from 'next/link';
+import GlossaryHover from '@/components/GlossaryHover';
 
-const StoryBlock = ({ text, highlight, imageSrc }: { text: string, highlight: string, imageSrc: string }) => {
+const StoryBlock = ({ text, highlight, imageSrc }: { text: React.ReactNode, highlight: string, imageSrc: string }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
@@ -51,7 +51,11 @@ export default function AboutClientLayout() {
       {/* Pixar Arc 3: Because of That (The Struggle) */}
       <StoryBlock 
         highlight="The Struggle in the Fog"
-        text="Because of that, young aviators in freezing PV-1 Venturas and PBY Catalinas were sent into 'zero visibility' fog to hunt an invisible enemy fleet, fighting frostbite, sheer cliffs, and sudden 'williwaw' winds."
+        text={
+          <>
+            Because of that, young aviators in freezing <GlossaryHover term="PV-1 Venturas">PV-1 Venturas</GlossaryHover> and <GlossaryHover term="PBY Catalinas">PBY Catalinas</GlossaryHover> were sent into 'zero visibility' fog to hunt an invisible enemy fleet, fighting frostbite, sheer cliffs, and sudden '<GlossaryHover term="williwaw">williwaw</GlossaryHover>' winds.
+          </>
+        }
         imageSrc="/images/card2.png"
       />
 
