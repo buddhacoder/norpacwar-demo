@@ -39,6 +39,11 @@ export default function MegaMenu({ locale }: { locale: string }) {
           {tNav('title')}
         </Link>
         <div className="flex gap-8 text-sm text-gray-300 font-medium tracking-wide items-center">
+          <div className="py-4" onMouseEnter={() => setActiveDropdown(null)}>
+            <Link href="/about" className={`hover:text-[var(--gold)] transition-colors py-2 ${(pathname && pathname.includes('about')) ? 'text-[var(--gold)]' : ''}`}>
+              THE STORY
+            </Link>
+          </div>
           {['campaigns', 'units', 'aircraft'].map((key) => (
             <div 
               key={key} 
