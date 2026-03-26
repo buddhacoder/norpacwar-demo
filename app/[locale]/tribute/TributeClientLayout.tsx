@@ -26,12 +26,25 @@ export default function TributeClientLayout() {
   ];
 
   const [carnations, setCarnations] = useState<any[]>([]);
+  const [embers, setEmbers] = useState<any[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', message: '' });
 
   useEffect(() => {
     setIsMounted(true);
+    
+    // Pre-calculate ember physics safely on the client to avoid SSR/Framer Motion dimension bugs
+    const generatedEmbers = Array.from({ length: 45 }).map(() => ({
+      id: Math.random().toString(),
+      startX: Math.random() * 100, // 0 to 100vw
+      targetX: (Math.random() - 0.5) * 20, // drift left or right
+      duration: 3 + Math.random() * 5,
+      delay: Math.random() * 5,
+      size: 2 + Math.random() * 3
+    }));
+    setEmbers(generatedEmbers);
+
     fetch('/api/tribute')
       .then(res => res.json())
       .then(data => {
@@ -43,18 +56,29 @@ export default function TributeClientLayout() {
   const Embers = () => {
     if (!isMounted) return null;
     return (
-      <div className="absolute inset-x-0 bottom-0 h-96 pointer-events-none overflow-hidden z-10">
-        {[...Array(25)].map((_, i) => (
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
+        {embers.map((e) => (
           <motion.div
-            key={i}
-            className="absolute bottom-0 w-1.5 h-1.5 bg-[var(--gold)] rounded-full shadow-[0_0_15px_var(--gold)]"
-            initial={{ x: `${Math.random() * 100}%`, y: 100, opacity: 0 }}
-            animate={{ 
-              y: -800 - Math.random() * 400, 
-              opacity: [0, 1, 0.8, 0],
-              x: `calc(${Math.random() * 100}% + ${Math.random() * 60 - 30}px)` 
+            key={e.id}
+            className="absolute bottom-0 rounded-full bg-[var(--gold)]"
+            style={{ 
+              left: `${e.startX}%`, 
+              width: e.size, 
+              height: e.size,
+              boxShadow: '0 0 10px 2px rgba(255, 170, 0, 0.8)'
             }}
-            transition={{ duration: 4 + Math.random() * 5, repeat: Infinity, delay: Math.random() * 5, ease: "easeOut" }}
+            initial={{ y: 200, opacity: 0, x: 0 }}
+            animate={{ 
+              y: -1000, 
+              opacity: [0, 1, 0.8, 0],
+              x: `${e.targetX}vw`
+            }}
+            transition={{ 
+              duration: e.duration, 
+              repeat: Infinity, 
+              delay: e.delay, 
+              ease: "easeOut" 
+            }}
           />
         ))}
       </div>
@@ -84,15 +108,33 @@ export default function TributeClientLayout() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden pt-32 pb-48 font-serif select-none flex flex-col items-center">
+    <div className="relative min-h-[120vh] bg-black overflow-hidden pt-32 pb-48 font-serif select-none flex flex-col items-center">
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(40,15,5,0.4)_0%,black_60%)] z-0" />
       
-      {/* Flickering Fire Base Simulation */}
-      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[var(--museumRed)]/30 via-[var(--gold)]/10 to-transparent mix-blend-screen opacity-80 animate-pulse pointer-events-none z-0" />
+      {/* Cinematic Volumetric Fire Simulation Base */}
+      <div className="absolute inset-x-0 bottom-0 h-full max-h-[800px] z-0 pointer-events-none flex flex-row items-end overflow-hidden mix-blend-screen opacity-90">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#ff2a00]/40 via-[#ff8800]/10 to-transparent" />
+        <motion.div 
+          animate={{ scale: [1, 1.1, 1], opacity: [0.6, 0.8, 0.6] }} 
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-40 left-[10%] w-[500px] h-[500px] bg-[#ff3300]/40 blur-[120px] rounded-full" 
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }} 
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute -bottom-32 right-[10%] w-[600px] h-[600px] bg-[#ff6600]/30 blur-[140px] rounded-full" 
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }} 
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#ffaa00]/25 blur-[150px] rounded-full" 
+        />
+      </div>
+      
       <Embers />
 
-      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center w-full">
+      <div className="relative z-30 max-w-4xl mx-auto px-6 text-center w-full">
         
         {/* The Eternal Flame Memorial Pillar */}
         <motion.div 
