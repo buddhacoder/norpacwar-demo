@@ -4,7 +4,9 @@
     "campaigns": "CAMPAIGNS",
     "units": "UNITS",
     "aircraft": "AIRCRAFT",
-    "archives": "ARCHIVES"
+    "archives": "ARCHIVES",
+    "about": "THE STORY",
+    "tribute": "TRIBUTE"
   },
   "Metadata": {
     "title": "North Pacific Skies – People and Machines",
@@ -60,5 +62,56 @@
     "statusMissing": "Status: MISSING",
     "mia": "M.I.A.",
     "kia": "K.I.A."
+  },
+  "Tribute": {
+    "inMemoriam": "In Memoriam",
+    "title": "The Eternal Flame",
+    "description": "In Russian tradition, the memory of the fallen is guarded by the Вечный огонь (Eternal Flame) and the offering of two red carnations—a symbol of blood shed and unending grief.",
+    "leaveCarnation": "Leave a Red Carnation",
+    "carnationsLaid": "{count} Carnations laid globally",
+    "payRespects": "Pay your respects",
+    "visitorLog": "Visitor Log",
+    "namePlaceholder": "Your Name (or Initials)",
+    "messagePlaceholder": "Optional Tag or Handle (e.g. @HistoryBuff)",
+    "cancel": "CANCEL",
+    "placeFlower": "PLACE FLOWER"
+  },
+  "TributeRecords": {
+    "r1": "Crew of PV-1 Ventura #34582 - Lost in Fog, Paramushiro",
+    "r2": "Lt. Cmdr. William Jones - Action over Kiska",
+    "r3": "Ens. Robert Smith - Williwaw strike off Adak coast",
+    "r4": "PBY Catalina Crew #9 - Night patrol disappearance",
+    "r5": "Sgt. Mikhail Ivanov - Kuril Landing Force",
+    "r6": "Cpt. James Rockford - Dutch Harbor Defense",
+    "r7": "Sub-Lt. Alexei Volkov - Air combat over Shumshu",
+    "r8": "Crew of B-24 Liberator #41-237 - Missing Presumed Dead",
+    "r9": "Pvt. Thomas McKelvey - Attu Ridge assault",
+    "r10": "Unidentified Soviet Aviator - North Pacific Sea"
+  },
+  "Artifacts": {
+    "terminal": "DIGITAL ARCHIVE TERMINAL",
+    "statusAvailable": "AVAILABLE",
+    "statusPending": "3D SCAN PENDING",
+    "statusSecurity": "SECURITY CLEARANCE REQUIRED",
+    "active": "INTERACTIVE 3D RENDER ACTIVE",
+    "awaiting": "AWAITING UPLINK",
+    "a1_title": "Aerial Reconnaissance Camera",
+    "a1_desc": "Recovered hardware similar to the optical equipment utilized by PV-1 Ventura crews over the Kuril Islands. Essential for plotting the Empire Express supply lines.",
+    "a2_title": "Order of the Red Star",
+    "a2_desc": "A Soviet military decoration awarded for personal courage. These medals were critical symbols of defiance among Kamchatka-based naval aviation crews operating in the unforgiving Pacific.",
+    "a3_title": "AN-6530 Aviator Goggles",
+    "a3_desc": "Standard issue goggles utilized by Allied patrol bombers. The tinted lenses were crucial for navigating the freezing, blinding fog of the Bering Sea during winter sorties."
+  },
+  "About": {
+    "h1": "The Setting",
+    "p1": "The Aleutians are a chain of frozen, razor-sharp rocks drowning in some of the most violent weather on Earth. A place where simply flying an airplane was often a death sentence.",
+    "h2": "1942: The Invasion",
+    "p2": "Until one day, the Japanese Empire invaded and occupied American soil—Attu and Kiska. It became the only campaign of World War II fought on the North American continent.",
+    "h3": "The Struggle in the Fog",
+    "p3": "Because of that, young aviators in freezing <pv1>PV-1 Venturas</pv1> and <pby>PBY Catalinas</pby> were sent into 'zero visibility' fog to hunt an invisible enemy fleet, fighting frostbite, sheer cliffs, and sudden '<williwaw>williwaw</williwaw>' winds.",
+    "h4": "The Forgotten War",
+    "p4": "Despite their sacrifices, this brutal theater became known as \"The Forgotten War.\" The men who fought and died there were vastly overshadowed by the warmer, romanticized battles of the South Pacific.",
+    "p5": "This museum exists to ensure their legacy in the freezing fog is never forgotten. It is a preservation of the original analog archives meticulously collected at <bold>norpacwar.com</bold>, carefully digitized to stand as an enduring tribute for researchers, historians, and generations to come.",
+    "btn": "Enter The Archive"
   }
 }

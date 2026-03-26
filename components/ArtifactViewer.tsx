@@ -22,32 +22,35 @@ declare global {
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Lock, ScanLine } from 'lucide-react';
-
-const ARTIFACTS = [
-  {
-    id: "8-71A",
-    title: "Aerial Reconnaissance Camera",
-    description: "Recovered hardware similar to the optical equipment utilized by PV-1 Ventura crews over the Kuril Islands. Essential for plotting the Empire Express supply lines.",
-    src: "/models/camera.glb",
-    status: "AVAILABLE",
-  },
-  {
-    id: "4-90B",
-    title: "Order of the Red Star",
-    description: "A Soviet military decoration awarded for personal courage. These medals were critical symbols of defiance among Kamchatka-based naval aviation crews operating in the unforgiving Pacific.",
-    src: null,
-    status: "3D SCAN PENDING",
-  },
-  {
-    id: "9-11C",
-    title: "AN-6530 Aviator Goggles",
-    description: "Standard issue goggles utilized by Allied patrol bombers. The tinted lenses were crucial for navigating the freezing, blinding fog of the Bering Sea during winter sorties.",
-    src: null,
-    status: "SECURITY CLEARANCE REQUIRED",
-  }
-];
+import { useTranslations } from 'next-intl';
 
 export default function ArtifactViewer() {
+  const t = useTranslations('Artifacts');
+
+  const ARTIFACTS = [
+    {
+      id: "8-71A",
+      title: t('a1_title'),
+      description: t('a1_desc'),
+      src: "/models/camera.glb",
+      status: t('statusAvailable'),
+    },
+    {
+      id: "4-90B",
+      title: t('a2_title'),
+      description: t('a2_desc'),
+      src: null,
+      status: t('statusPending'),
+    },
+    {
+      id: "9-11C",
+      title: t('a3_title'),
+      description: t('a3_desc'),
+      src: null,
+      status: t('statusSecurity'),
+    }
+  ];
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const active = ARTIFACTS[currentIndex];
 
@@ -61,7 +64,7 @@ export default function ArtifactViewer() {
       <div className="flex items-center justify-between mb-4 px-2">
         <h2 className="text-xl font-serif text-[var(--gold)] flex items-center gap-3">
           <ScanLine className="w-5 h-5 opacity-70" />
-          DIGITAL ARCHIVE TERMINAL
+          {t('terminal')}
         </h2>
         <div className="flex gap-2">
           <button onClick={prev} className="p-2 border border-white/10 text-white/50 hover:text-white hover:bg-white/5 transition-colors rounded-sm">
@@ -124,7 +127,7 @@ export default function ArtifactViewer() {
             
             <div className="flex items-center gap-2 text-[10px] text-gray-500 font-mono">
               <span className={`w-2 h-2 rounded-full ${active.src ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
-              {active.src ? 'INTERACTIVE 3D RENDER ACTIVE' : 'AWAITING UPLINK'}
+              {active.src ? t('active') : t('awaiting')}
             </div>
           </motion.div>
         </div>

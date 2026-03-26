@@ -3,18 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
-const fallenRecords = [
-  "Crew of PV-1 Ventura #34582 - Lost in Fog, Paramushiro",
-  "Lt. Cmdr. William Jones - Action over Kiska",
-  "Ens. Robert Smith - Williwaw strike off Adak coast",
-  "PBY Catalina Crew #9 - Night patrol disappearance",
-  "Sgt. Mikhail Ivanov - Kuril Landing Force",
-  "Cpt. James Rockford - Dutch Harbor Defense",
-  "Sub-Lt. Alexei Volkov - Air combat over Shumshu",
-  "Crew of B-24 Liberator #41-237 - Missing Presumed Dead",
-  "Pvt. Thomas McKelvey - Attu Ridge assault",
-  "Unidentified Soviet Aviator - North Pacific Sea"
-];
+import { useTranslations } from 'next-intl';
 
 // Stylized realistic carnation overlapping SVG paths
 const CarnationSVG = () => (
@@ -29,6 +18,13 @@ const CarnationSVG = () => (
 );
 
 export default function TributeClientLayout() {
+  const t = useTranslations('Tribute');
+  const tRec = useTranslations('TributeRecords');
+  const fallenRecords = [
+    tRec('r1'), tRec('r2'), tRec('r3'), tRec('r4'), tRec('r5'),
+    tRec('r6'), tRec('r7'), tRec('r8'), tRec('r9'), tRec('r10')
+  ];
+
   const [carnations, setCarnations] = useState<any[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
@@ -105,13 +101,11 @@ export default function TributeClientLayout() {
           transition={{ duration: 1.5 }}
           className="mb-16"
         >
-          <h1 className="text-[var(--gold)] tracking-[0.4em] uppercase text-sm md:text-base font-mono mb-6">In Memoriam</h1>
-          <h2 className="text-4xl md:text-6xl text-white font-medium mb-8">The Eternal Flame</h2>
+          <h1 className="text-[var(--gold)] tracking-[0.4em] uppercase text-sm md:text-base font-mono mb-6">{t('inMemoriam')}</h1>
+          <h2 className="text-4xl md:text-6xl text-white font-medium mb-8">{t('title')}</h2>
           <div className="h-px w-24 bg-[var(--museumRed)] mx-auto opacity-50 mb-8" />
           
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-            In Russian tradition, the memory of the fallen is guarded by the <em>Вечный огонь</em> (Eternal Flame) and the offering of two red carnations—a symbol of blood shed and unending grief.
-          </p>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: t('description') }} />
         </motion.div>
 
         {/* The Slow Scrolling Oscars-style Roll Call */}
@@ -160,39 +154,39 @@ export default function TributeClientLayout() {
                 onClick={() => setFormOpen(true)}
                 className="relative z-40 px-8 py-4 border border-[var(--museumRed)]/50 text-[var(--museumRed)] hover:bg-[var(--museumRed)]/10 uppercase tracking-widest text-sm font-mono transition-colors mx-auto mt-24 bg-black/50 backdrop-blur-sm"
               >
-                Leave a Red Carnation
+                {t('leaveCarnation')}
               </motion.button>
             ) : (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                 className="relative z-40 max-w-sm mx-auto mt-16 glass-panel p-6 border border-[var(--museumRed)]/30 backdrop-blur-xl bg-black/80"
               >
-                <div className="text-[var(--gold)] font-mono text-xs uppercase tracking-widest mb-4">Visitor Log</div>
+                <div className="text-[var(--gold)] font-mono text-xs uppercase tracking-widest mb-4">{t('visitorLog')}</div>
                 <input 
                   type="text" 
-                  placeholder="Your Name (or Initials)" 
+                  placeholder={t('namePlaceholder')}
                   className="w-full bg-white/5 border border-white/10 text-white px-4 py-2 mb-3 font-sans text-sm focus:outline-none focus:border-[var(--museumRed)]/50"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   maxLength={40}
                 />
                 <textarea 
-                  placeholder="Optional Tag or Handle (e.g. @HistoryBuff)" 
+                  placeholder={t('messagePlaceholder')}
                   className="w-full bg-white/5 border border-white/10 text-white px-4 py-2 mb-4 font-sans text-sm h-16 resize-none focus:outline-none focus:border-[var(--museumRed)]/50"
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
                   maxLength={100}
                 />
                 <div className="flex gap-2">
-                  <button onClick={() => setFormOpen(false)} className="flex-1 py-2 text-xs font-mono text-gray-400 hover:text-white transition-colors">CANCEL</button>
-                  <button onClick={layCarnation} disabled={!formData.name} className="flex-1 py-2 text-xs font-mono bg-[var(--museumRed)]/20 text-[var(--museumRed)] hover:bg-[var(--museumRed)]/40 transition-colors border border-[var(--museumRed)]/50 disabled:opacity-50">PLACE FLOWER</button>
+                  <button onClick={() => setFormOpen(false)} className="flex-1 py-2 text-xs font-mono text-gray-400 hover:text-white transition-colors">{t('cancel')}</button>
+                  <button onClick={layCarnation} disabled={!formData.name} className="flex-1 py-2 text-xs font-mono bg-[var(--museumRed)]/20 text-[var(--museumRed)] hover:bg-[var(--museumRed)]/40 transition-colors border border-[var(--museumRed)]/50 disabled:opacity-50">{t('placeFlower')}</button>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
           
           <div className="absolute bottom-0 inset-x-0 text-center text-xs text-gray-600 font-mono uppercase tracking-widest">
-            {carnations.length > 0 ? `${carnations.length * 2} Carnations laid globally` : "Pay your respects"}
+            {carnations.length > 0 ? t('carnationsLaid', { count: carnations.length * 2 }) : t('payRespects')}
           </div>
         </div>
 
