@@ -112,23 +112,23 @@ export default function TributeClientLayout() {
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(40,15,5,0.4)_0%,black_60%)] z-0" />
       
-      {/* Cinematic Volumetric Fire Simulation Base */}
-      <div className="absolute inset-x-0 bottom-0 h-full max-h-[800px] z-0 pointer-events-none flex flex-row items-end overflow-hidden mix-blend-screen opacity-90">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#ff2a00]/40 via-[#ff8800]/10 to-transparent" />
+      {/* Cinematic Volumetric Fire Simulation Base (Safari Safe) */}
+      <div className="absolute inset-x-0 bottom-0 h-full max-h-[800px] z-0 pointer-events-none flex flex-row items-end overflow-hidden opacity-90">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#ff2a00]/50 via-[#ff8800]/20 to-transparent" />
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.6, 0.8, 0.6] }} 
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-40 left-[10%] w-[500px] h-[500px] bg-[#ff3300]/40 blur-[120px] rounded-full" 
+          className="absolute -bottom-40 left-[10%] w-[500px] h-[500px] bg-[#ff3300]/50 blur-[120px] rounded-full" 
         />
         <motion.div 
           animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }} 
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute -bottom-32 right-[10%] w-[600px] h-[600px] bg-[#ff6600]/30 blur-[140px] rounded-full" 
+          className="absolute -bottom-32 right-[10%] w-[600px] h-[600px] bg-[#ff6600]/40 blur-[140px] rounded-full" 
         />
         <motion.div 
           animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }} 
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#ffaa00]/25 blur-[150px] rounded-full" 
+          className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#ffaa00]/30 blur-[150px] rounded-full" 
         />
       </div>
       
