@@ -1,8 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 
 const fallenRecords = [
   "Crew of PV-1 Ventura #34582 - Lost in Fog, Paramushiro",
@@ -17,56 +16,87 @@ const fallenRecords = [
   "Unidentified Soviet Aviator - North Pacific Sea"
 ];
 
-export default function TributeClientLayout() {
-  const [carnations, setCarnations] = useState<{ id: number, x: number, r: number }[]>([]);
+// Stylized realistic carnation overlapping SVG paths
+const CarnationSVG = () => (
+  <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full opacity-90 drop-shadow-xl saturate-150">
+    <path d="M50 85 C 40 100, 60 100, 50 85 C 30 75, 70 75, 50 85 Z" className="text-green-800" />
+    <path d="M50 15 C 60 5, 80 5, 80 20 C 80 25, 65 30, 50 35 C 35 30, 20 25, 20 20 C 20 5, 40 5, 50 15 Z" className="text-red-700" />
+    <path d="M50 25 C 70 10, 95 15, 90 35 C 85 45, 65 45, 50 50 C 35 45, 15 45, 10 35 C 5 15, 30 10, 50 25 Z" className="text-red-600" />
+    <path d="M50 40 C 75 25, 105 40, 90 65 C 80 75, 60 70, 50 75 C 40 70, 20 75, 10 65 C -5 40, 25 25, 50 40 Z" className="text-red-500" />
+    <path d="M50 55 C 80 45, 100 65, 80 85 C 65 95, 55 85, 50 90 C 45 85, 35 95, 20 85 C 0 65, 20 45, 50 55 Z" className="text-red-600" />
+    <path d="M50 75 C 65 65, 85 85, 65 100 C 55 105, 50 95, 50 95 C 50 95, 45 105, 35 100 C 15 85, 35 65, 50 75 Z" className="text-red-700" />
+  </svg>
+);
 
-  // Simple particle system for the Eternal Flame embers
+export default function TributeClientLayout() {
+  const [carnations, setCarnations] = useState<any[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', message: '' });
+
+  useEffect(() => {
+    setIsMounted(true);
+    fetch('/api/tribute')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setCarnations(data);
+      })
+      .catch(err => console.error("Database sync delay", err));
+  }, []);
+
   const Embers = () => {
+    if (!isMounted) return null;
     return (
       <div className="absolute inset-x-0 bottom-0 h-96 pointer-events-none overflow-hidden z-10">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(25)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute bottom-0 w-1.5 h-1.5 bg-[var(--gold)] rounded-full shadow-[0_0_10px_var(--gold)]"
-            initial={{ 
-              x: `${Math.random() * 100}%`, 
-              y: 50, 
-              opacity: 0 
-            }}
+            className="absolute bottom-0 w-1.5 h-1.5 bg-[var(--gold)] rounded-full shadow-[0_0_15px_var(--gold)]"
+            initial={{ x: `${Math.random() * 100}%`, y: 100, opacity: 0 }}
             animate={{ 
-              y: -500 - Math.random() * 200, 
-              opacity: [0, 1, 0],
-              x: `calc(${Math.random() * 100}% + ${Math.random() * 40 - 20}px)` 
+              y: -800 - Math.random() * 400, 
+              opacity: [0, 1, 0.8, 0],
+              x: `calc(${Math.random() * 100}% + ${Math.random() * 60 - 30}px)` 
             }}
-            transition={{ 
-              duration: 3 + Math.random() * 4, 
-              repeat: Infinity, 
-              delay: Math.random() * 5,
-              ease: "easeOut"
-            }}
+            transition={{ duration: 4 + Math.random() * 5, repeat: Infinity, delay: Math.random() * 5, ease: "easeOut" }}
           />
         ))}
       </div>
     );
   };
 
-  const layCarnation = () => {
-    if (carnations.length > 50) return; // limit to prevent DOM overload
+  const layCarnation = async () => {
+    if (!formData.name.trim()) return;
     const newCarnation = {
-      id: Date.now(),
-      x: 30 + Math.random() * 40, // percentage x between 30 and 70
-      r: -30 + Math.random() * 60 // rotation angle
+      name: formData.name,
+      message: formData.message,
+      xLocation: 20 + Math.random() * 60,
+      rotation: -45 + Math.random() * 90
     };
-    setCarnations([...carnations, newCarnation]);
+
+    // Optimistically update
+    setCarnations(prev => [...prev, { _id: Date.now().toString(), ...newCarnation }]);
+    setFormOpen(false);
+    setFormData({ name: '', message: '' });
+
+    // Sync to Sanity Backend
+    await fetch('/api/tribute', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newCarnation)
+    });
   };
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden pt-32 pb-48 font-serif select-none">
+    <div className="relative min-h-screen bg-black overflow-hidden pt-32 pb-48 font-serif select-none flex flex-col items-center">
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(40,15,5,0.4)_0%,black_60%)] z-0" />
+      
+      {/* Flickering Fire Base Simulation */}
+      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[var(--museumRed)]/30 via-[var(--gold)]/10 to-transparent mix-blend-screen opacity-80 animate-pulse pointer-events-none z-0" />
       <Embers />
 
-      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center">
+      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center w-full">
         
         {/* The Eternal Flame Memorial Pillar */}
         <motion.div 
@@ -80,7 +110,7 @@ export default function TributeClientLayout() {
           <div className="h-px w-24 bg-[var(--museumRed)] mx-auto opacity-50 mb-8" />
           
           <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-            In Russian tradition, the memory of the fallen is guarded by the <em>Вечный огонь</em> (Eternal Flame) and the offering of two red carnations—a symbol of blood shed and unending grief. We honor all those lost to the freezing fog of the North Pacific.
+            In Russian tradition, the memory of the fallen is guarded by the <em>Вечный огонь</em> (Eternal Flame) and the offering of two red carnations—a symbol of blood shed and unending grief.
           </p>
         </motion.div>
 
@@ -97,36 +127,72 @@ export default function TributeClientLayout() {
               </div>
             ))}
           </motion.div>
-          {/* Top/Bottom Fade mask via CSS */}
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black via-transparent to-black" />
         </div>
 
         {/* The Interactive Red Carnation Offering */}
-        <div className="relative pt-12">
+        <div className="relative pt-12 min-h-[30vh] w-full max-w-2xl mx-auto border-t border-[var(--museumRed)]/20">
+          
+          {/* Stored Sanity Carnations */}
           {carnations.map((c) => (
             <motion.div
-              key={c.id}
-              initial={{ opacity: 0, y: -50, rotate: c.r }}
+              key={c._id}
+              initial={{ opacity: 0, y: -50, rotate: c.rotation }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="absolute bottom-32 w-12 h-12 text-[var(--museumRed)] z-30 drop-shadow-lg"
-              style={{ left: `${c.x}%` }}
+              className="absolute bottom-16 w-16 h-16 text-[var(--museumRed)] z-30 group cursor-pointer"
+              style={{ left: `${c.xLocation}%` }}
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full opacity-90"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <CarnationSVG />
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 opacity-0 group-hover:opacity-100 transition-opacity bg-black/90 border border-[var(--gold)]/30 p-3 rounded-sm text-xs font-mono text-white shadow-2xl pointer-events-none z-50">
+                <div className="text-[var(--gold)] font-bold mb-1">{c.name}</div>
+                {c.message && <div className="text-gray-400 italic break-words">"{c.message}"</div>}
+              </div>
             </motion.div>
           ))}
 
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={layCarnation}
-            className="relative z-40 px-8 py-4 border border-[var(--museumRed)]/50 text-[var(--museumRed)] hover:bg-[var(--museumRed)]/10 uppercase tracking-widest text-sm font-mono transition-colors"
-          >
-            Leave a Red Carnation
-          </motion.button>
+          <AnimatePresence>
+            {!formOpen ? (
+              <motion.button 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setFormOpen(true)}
+                className="relative z-40 px-8 py-4 border border-[var(--museumRed)]/50 text-[var(--museumRed)] hover:bg-[var(--museumRed)]/10 uppercase tracking-widest text-sm font-mono transition-colors mx-auto mt-24 bg-black/50 backdrop-blur-sm"
+              >
+                Leave a Red Carnation
+              </motion.button>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                className="relative z-40 max-w-sm mx-auto mt-16 glass-panel p-6 border border-[var(--museumRed)]/30 backdrop-blur-xl bg-black/80"
+              >
+                <div className="text-[var(--gold)] font-mono text-xs uppercase tracking-widest mb-4">Visitor Log</div>
+                <input 
+                  type="text" 
+                  placeholder="Your Name (or Initials)" 
+                  className="w-full bg-white/5 border border-white/10 text-white px-4 py-2 mb-3 font-sans text-sm focus:outline-none focus:border-[var(--museumRed)]/50"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  maxLength={40}
+                />
+                <textarea 
+                  placeholder="Optional Tag or Handle (e.g. @HistoryBuff)" 
+                  className="w-full bg-white/5 border border-white/10 text-white px-4 py-2 mb-4 font-sans text-sm h-16 resize-none focus:outline-none focus:border-[var(--museumRed)]/50"
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  maxLength={100}
+                />
+                <div className="flex gap-2">
+                  <button onClick={() => setFormOpen(false)} className="flex-1 py-2 text-xs font-mono text-gray-400 hover:text-white transition-colors">CANCEL</button>
+                  <button onClick={layCarnation} disabled={!formData.name} className="flex-1 py-2 text-xs font-mono bg-[var(--museumRed)]/20 text-[var(--museumRed)] hover:bg-[var(--museumRed)]/40 transition-colors border border-[var(--museumRed)]/50 disabled:opacity-50">PLACE FLOWER</button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
           
-          <div className="mt-8 text-xs text-gray-500 font-mono uppercase tracking-widest">
-            {carnations.length > 0 ? `${carnations.length * 2} Carnations placed globally` : "Pay your respects"}
+          <div className="absolute bottom-0 inset-x-0 text-center text-xs text-gray-600 font-mono uppercase tracking-widest">
+            {carnations.length > 0 ? `${carnations.length * 2} Carnations laid globally` : "Pay your respects"}
           </div>
         </div>
 
