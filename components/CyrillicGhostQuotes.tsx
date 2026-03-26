@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 const quotes = [
   { ru: "Ни шагу назад!", en: "Not a step back!", author: "Stalin's Order No. 227" },
@@ -12,13 +13,22 @@ const quotes = [
 
 export default function CyrillicGhostQuotes() {
   const [index, setIndex] = useState(0);
+  const pathname = usePathname();
+
+  // Normalize path removing locale to whitelist atmospheric pages
+  const normalizedPath = pathname.replace(/^\/(en|ru)/, '') || '/';
+  const allowedPaths = ['/', '/about', '/tribute'];
+  const shouldRender = allowedPaths.includes(normalizedPath);
 
   useEffect(() => {
+    if (!shouldRender) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % quotes.length);
     }, 15000); // cycle every 15s
     return () => clearInterval(interval);
-  }, []);
+  }, [shouldRender]);
+
+  if (!shouldRender) return null;
 
   return (
     <div className="fixed top-[40vh] left-0 right-0 z-40 pointer-events-none flex items-center justify-center overflow-hidden opacity-30">
