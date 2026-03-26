@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search } from 'lucide-react';
+import IntelligentDossier from './IntelligentDossier';
 
 export default function ArchivalLens({ 
   translatedHtml, 
@@ -49,8 +50,9 @@ export default function ArchivalLens({
               exit={{ opacity: 0, filter: "blur(4px)" }}
               transition={{ duration: 0.4 }}
               className="prose prose-invert max-w-none text-gray-300 leading-relaxed font-serif"
-              dangerouslySetInnerHTML={{ __html: translatedHtml }}
-            />
+            >
+              <IntelligentDossier htmlContent={translatedHtml} />
+            </motion.div>
           ) : (
             <motion.div
               key="original"
@@ -60,8 +62,9 @@ export default function ArchivalLens({
               transition={{ duration: 0.4 }}
               className="prose prose-invert max-w-none text-amber-100/70 leading-relaxed font-mono tracking-tighter mix-blend-screen bg-black/40 p-4 rounded-md border border-white/10"
               style={{ fontFamily: '"Courier Prime", "Courier New", monospace' }}
-              dangerouslySetInnerHTML={{ __html: originalHtml }}
-            />
+            >
+              <IntelligentDossier htmlContent={originalHtml} />
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

@@ -9,6 +9,8 @@ const dictionary: Record<string, string> = {
   "PV-1 Venturas": "A twin-engine American patrol bomber known for its speed and heavy armament, utilized effectively in the extreme weather of the Aleutian campaign.",
   "PBY Catalinas": "A slow, durable American flying boat used heavily for search operations, rescue, and anti-submarine warfare.",
   "Dutch Harbor": "An American naval operating base in the Aleutian Islands, heavily bombed by the Japanese carrier strike force in June 1942.",
+  "BuNo": "Bureau of Aeronautics Number. The unique sequential serial number assigned to a US Navy aircraft upon procurement.",
+  "Tail Code": "A highly visible alphanumeric designation painted on the empennage (tail) of an aircraft to quickly identify its specific squadron and position.",
 };
 
 export default function GlossaryHover({ term, children }: { term: string, children: React.ReactNode }) {
