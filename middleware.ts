@@ -7,28 +7,26 @@ const intlMiddleware = createMiddleware(routing);
 
 export default function middleware(req: NextRequest) {
   const url = req.nextUrl;
+  const authCookie = req.cookies.get('norpacwar_auth');
+  const hasAccessQuery = url.searchParams.get('access') === 'pixar';
   
-  // 1. Allow the site owner to set the secret unlock cookie
-  if (url.searchParams.get('access') === 'pixar') {
-    const res = NextResponse.redirect(new URL('/', req.url));
-    res.cookies.set('norpacwar_auth', 'true', { path: '/', maxAge: 60 * 60 * 24 * 365 });
-    return res;
-  }
-
-  // 2. Protect the front-end masterpiece. Ignore /studio and /under-construction
   const isProtectedPath = !url.pathname.startsWith('/under-construction') && !url.pathname.startsWith('/studio');
-  
-  if (isProtectedPath) {
-    const authCookie = req.cookies.get('norpacwar_auth');
-    if (!authCookie || authCookie.value !== 'true') {
-      // If the colleague deletes /studio from the URL, rewrite to the sterile wall
-      url.pathname = '/under-construction';
-      return NextResponse.rewrite(url);
-    }
+
+  // Block unauthorized visitors dynamically
+  if (isProtectedPath && !hasAccessQuery && (!authCookie || authCookie.value !== 'true')) {
+    url.pathname = '/under-construction';
+    return NextResponse.rewrite(url);
   }
 
-  // 3. Normal internationalized routing for authenticated users
-  return intlMiddleware(req);
+  // Normal internationalized routing
+  const res = intlMiddleware(req);
+
+  // Set the secret lifetime cookie if they used the custom bypass URL
+  if (hasAccessQuery) {
+    res.cookies.set('norpacwar_auth', 'true', { path: '/', maxAge: 60 * 60 * 24 * 365, secure: process.env.NODE_ENV === 'production' });
+  }
+
+  return res;
 }
 
 export const config = {
