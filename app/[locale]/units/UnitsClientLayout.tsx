@@ -68,7 +68,7 @@ export default function UnitsClientLayout({ data }: any) {
             </p>
           </div>
 
-          <div className="flex flex-col gap-2 mt-12">
+          <div className="flex flex-col gap-2 mt-12" id="squadrons">
             {data && data.length > 0 && data.map((unit: any, i: number) => {
               const localizedTitle = locale === 'ru' && unit.title_ru ? unit.title_ru : unit.title_en;
               const localizedContent = locale === 'ru' && unit.content_ru ? unit.content_ru : unit.content_en;
@@ -86,7 +86,7 @@ export default function UnitsClientLayout({ data }: any) {
         </motion.div>
 
         {/* Authentic Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24" id="aces">
           {crewPhotos.map((photo, i) => (
             <motion.div 
               key={photo.title}

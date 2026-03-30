@@ -38,7 +38,7 @@ export default function AircraftClientLayout({ data }: any) {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <div className="text-[var(--gold)] font-bold tracking-widest text-sm mb-4">AIRCRAFT & MACHINES</div>
+          <div className="text-[var(--gold)] font-bold tracking-widest text-sm mb-4" id="pv-1">AIRCRAFT & MACHINES</div>
           <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">{t('title')}</h1>
           <p className="text-gray-400 text-lg leading-relaxed max-w-3xl mb-12">
             {t('description')}
@@ -60,7 +60,7 @@ export default function AircraftClientLayout({ data }: any) {
             </div>
           </div>
 
-          <h2 className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4">Honoring the Losses</h2>
+          <h2 id="losses" className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4 pt-10">Honoring the Losses</h2>
           <p className="text-gray-400 text-sm mb-8 italic">Based on Craig Fuller's list and War Diaries of VP/VPB 131, 135, 136, 139.</p>
 
           <div className="grid grid-cols-1 gap-4 mb-20">
@@ -82,7 +82,7 @@ export default function AircraftClientLayout({ data }: any) {
             ))}
           </div>
 
-          <h2 className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4">{t('galleryTitle')}</h2>
+          <h2 id="artifacts" className="text-3xl font-serif text-[var(--gold)] mb-8 border-b border-white/5 pb-4 pt-10">{t('galleryTitle')}</h2>
           <p className="text-gray-400 text-lg leading-relaxed max-w-3xl mb-12">
             Explore the historical artifacts, mission briefing documents, and mechanical diagrams that kept the Empire Express flying. Click on any document to view the high-resolution archival scan.
           </p>
