@@ -22,34 +22,53 @@ declare global {
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Lock, ScanLine } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
-export default function ArtifactViewer() {
+export interface Artifact {
+  _id: string;
+  artifact_id: string;
+  title_en: string;
+  title_ru?: string;
+  description_en?: string;
+  description_ru?: string;
+  model_url?: string | null;
+}
+
+export default function ArtifactViewer({ initialArtifacts }: { initialArtifacts?: Artifact[] }) {
   const t = useTranslations('Artifacts');
+  const locale = useLocale();
 
-  const ARTIFACTS = [
-    {
-      id: "8-71A",
-      title: t('a1_title'),
-      description: t('a1_desc'),
-      src: "/models/camera.glb",
-      status: t('statusAvailable'),
-    },
-    {
-      id: "4-90B",
-      title: t('a2_title'),
-      description: t('a2_desc'),
-      src: null,
-      status: t('statusPending'),
-    },
-    {
-      id: "9-11C",
-      title: t('a3_title'),
-      description: t('a3_desc'),
-      src: null,
-      status: t('statusSecurity'),
-    }
-  ];
+  const ARTIFACTS = initialArtifacts && initialArtifacts.length > 0 
+    ? initialArtifacts.map(a => ({
+        id: a.artifact_id,
+        title: locale === 'ru' && a.title_ru ? a.title_ru : a.title_en,
+        description: locale === 'ru' && a.description_ru ? a.description_ru : a.description_en,
+        src: a.model_url || null,
+        status: a.model_url ? t('statusAvailable') : t('statusSecurity'),
+      }))
+    : [
+        {
+          id: "8-71A",
+          title: t('a1_title'),
+          description: t('a1_desc'),
+          src: "/models/camera.glb",
+          status: t('statusAvailable'),
+        },
+        {
+          id: "4-90B",
+          title: t('a2_title'),
+          description: t('a2_desc'),
+          src: null,
+          status: t('statusPending'),
+        },
+        {
+          id: "9-11C",
+          title: t('a3_title'),
+          description: t('a3_desc'),
+          src: null,
+          status: t('statusSecurity'),
+        }
+      ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const active = ARTIFACTS[currentIndex];
